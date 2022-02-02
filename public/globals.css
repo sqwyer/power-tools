@@ -71,7 +71,7 @@ body {
 }
 
 .gapped {
-    gap: 10px;
+    gap: 20px;
 }
 
 .col {
@@ -113,4 +113,69 @@ body {
 .btn.primary:hover {
     background: rgb(19,112,243);
     color: #fff;
+}
+
+.middle {
+    justify-items: center;
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+}
+
+.flex-1 {
+    flex: 1;
+}
+
+footer {
+    padding: 2em 3em;
+    display: flex;
+    gap: 10px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    border-top: 1px solid #eee;
+}
+
+footer .btn {
+    background: inherit;
+}
+
+footer p, footer a {
+    color: #666666;
+}
+
+footer div.main {
+    flex: 1;
+}
+
+footer div.main * {
+    max-width: 20vw;
+}
+
+footer div *:not(:first-child) {
+    margin-top: .5em;
+}
+
+footer div {
+    padding: 2em 3em;
+}
+
+footer a:not(.main a) {
+    text-decoration: underline;
+    display: block;
+}
+
+footer a:hover {
+    color: #000;
+}
+
+footer .flex-row {
+    padding: 1em 0;
+}
+
+footer .main a {
+    text-decoration: none;
+    padding: .5em 1.5em;
 }

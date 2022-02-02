@@ -1,0 +1,35 @@
+form {
+    margin: 0 auto;
+    padding: 3em;
+    display: flex;
+    flex-direction: column;
+    width: 25vw;
+}
+
+form label {
+    font-weight: bold;
+}
+
+form p {
+    color: #666666;
+}
+
+form *:not(a) {
+    width: 100%;
+    display: block;
+}
+
+form *:not(:first-child) {
+    margin-top: 1em;
+}
+
+form input {
+    padding: 1em;
+    border: 1px solid #eee;
+    outline: none;
+    border-radius: 4px;
+}
+
+form a {
+    color: rgb(19,112,243);
+}

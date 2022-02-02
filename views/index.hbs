@@ -15,16 +15,21 @@
     <div class="nav">
         <a class="title" href="/">PowerTools</a>
         <div class="links">
+            <a href="#">Articles</a>
             <a href="#">Help Center</a>
-            <a href="#">Register</a>
-            <a href="#" class="btn">Login</a>
+            <a href="/api/auth/register">Register</a>
+            <a href="/api/auth/login" class="btn">Login</a>
         </div>
     </div>
     <header>
         <h1>Manage your EAST projects.</h1>
-        <p>PowerTools is a platform which makes it easier for students in EAST to manage their projects; solo or in a group setting.</p>
+        <p class="push-up">PowerTools is a platform which makes it easier for students in EAST to manage their projects; solo or in a group setting.</p>
+        <div class="row gapped w-80 middle">
+            <button class="btn">Register</button>
+            <button class="btn">Login</button>
+        </div>
     </header>
-    <div class="row gapped w-80">
+    {{!-- <div class="row gapped w-80">
         <div class="col text-center">
             <p class="push-up">Create and manage EAST projects efficiently.</p>
             <button class="btn push-down block primary">Learn More</button>
@@ -34,13 +39,42 @@
             <button class="btn push-down block primary">Learn More</button>
         </div>
         <div class="col text-center">
-            <p class="push-up">c</p>
+            <p class="push-up">No ads, no paywalls, nothing... ever.</p>
             <button class="btn push-down block primary">Learn More</button>
         </div>
         <div class="col text-center">
             <p class="push-up">Developed entirely by EAST students.</p>
             <button class="btn push-down block primary">Read More</button>
         </div>
-    </div>
+    </div> --}}
+    <footer>
+        <div class="main">
+            <h2>Power Tools</h2>
+            <p>A platform which makes it easier for students in EAST to manage their projects; solo or in a group setting.</p>
+            <div class="flex-row gapped">
+                <a class="btn flex-1" href="/api/auth/register">Register</a>
+                <a class="btn flex-1" href="/api/auth/login">Login</a>
+            </div>
+        </div>
+        <div>
+            <h4>Product</h4>
+            <a href="#">Help Center</a>
+            <a href="#">Register</a>
+            <a href="#">Login</a>
+        </div>
+        <div>
+            <h4>Development</h4>
+            <a href="#">Branding Guide</a>
+            <a href="#">Bug Reports</a>
+            <a href="#">Source</a>
+        </div>
+        <div>
+            <h4>Project</h4>
+            <a href="#">Team Members</a>
+            <a href="#">Project Roadmap</a>
+            <a href="#">Articles</a>
+            <a href="#">Deadlines</a>
+        </div>
+    </footer>
 </body>
 </html>

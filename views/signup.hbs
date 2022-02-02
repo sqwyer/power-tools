@@ -1,6 +1,71 @@
-<form action="/api/auth/signup" method="POST">
-    <input name="email" type="email" required>
-    <input name="graduates" type="number" required>
-    <input name="password" type="text" required>
-    <button type="submit">Login</button>
-</form>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/public/globals.css">
+    <link rel="stylesheet" href="/public/index.css">
+    <link rel="stylesheet" href="/public/form.css">
+    <title>Power Tools</title>
+</head>
+<body>
+    <div class="nav">
+        <a class="title" href="/">PowerTools</a>
+        <div class="links">
+            <a href="#">Articles</a>
+            <a href="#">Help Center</a>
+            <a href="#">Register</a>
+            <a href="#" class="btn">Login</a>
+        </div>
+    </div>
+    <form action="/api/auth/signup" method="POST">
+        <label for="name">Full Name</label>
+        <input name="name" type="text" placeholder="John Doe" required>
+        <label for="email">Email</label>
+        <input name="email" type="email" placeholder="johndoe@gmail.com" required>
+        <label for="email">Graduation Year</label>
+        <input name="graduates" type="number" id="graduates" required>
+        <label for="password">Password</label>
+        <input name="password" type="password" placeholder="••••••••" required>
+        <button class="btn primary">Login</button>
+        <p>Already have an account? <a href="/api/auth/login">Login.</a></p>
+    </form>
+    <footer>
+        <div class="main">
+            <h2>Power Tools</h2>
+            <p>A platform which makes it easier for students in EAST to manage their projects; solo or in a group setting.</p>
+            <div class="flex-row gapped">
+                <a class="btn flex-1" href="/api/auth/register">Register</a>
+                <a class="btn flex-1" href="/api/auth/login">Login</a>
+            </div>
+        </div>
+        <div>
+            <h4>Product</h4>
+            <a href="#">Help Center</a>
+            <a href="/api/auth/register">Register</a>
+            <a href="/api/auth/login">Login</a>
+        </div>
+        <div>
+            <h4>Development</h4>
+            <a href="#">Branding Guide</a>
+            <a href="#">Bug Reports</a>
+            <a href="#">Source</a>
+        </div>
+        <div>
+            <h4>Project</h4>
+            <a href="#">Team Members</a>
+            <a href="#">Project Roadmap</a>
+            <a href="#">Articles</a>
+            <a href="#">Deadlines</a>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('graduates').setAttribute('placeholder', new Date().getFullYear()+1);
+    </script>
+</body>
+</html>
