@@ -138,6 +138,28 @@ a {
     color: #fff;
 }
 
+.btn.success {
+    border: 2px solid rgb(43, 227, 124);
+    color: rgb(43, 227, 124);
+    box-shadow: 0px 0px 5px 5px rgba(43, 227, 124, 0.1);
+}
+
+.btn.success:hover {
+    background: rgb(43, 227, 124);
+    color: #fff;
+}
+
+.btn.danger {
+    border: 2px solid rgb(227, 43, 43);
+    color: rgb(227, 43, 43);
+    box-shadow: 0px 0px 5px 5px rgba(227, 43, 43, 0.1);
+}
+
+.btn.danger:hover {
+    background: rgb(227, 43, 43);
+    color: #fff;
+}
+
 .middle {
     justify-items: center;
     align-items: center;
