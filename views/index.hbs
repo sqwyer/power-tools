@@ -17,16 +17,25 @@
         <div class="links">
             <a href="#">Articles</a>
             <a href="#">Help Center</a>
+            {{#isntEmpty user}}
+            <a href="/dashboard">Dashboard</a>
+            <a class="btn" href="/api/auth/logout">Logout</a>
+            {{else}}
             <a href="/api/auth/register">Register</a>
             <a href="/api/auth/login" class="btn">Login</a>
+            {{/isntEmpty}}
         </div>
     </div>
     <header>
         <h1>Manage your EAST projects.</h1>
         <p class="push-up">PowerTools is a platform which makes it easier for students in EAST to manage their projects; solo or in a group setting.</p>
         <div class="row gapped w-80 middle">
+            {{#isntEmpty user}}
+            <button class="btn" onclick="window.open('/dashboard', '_self')">Go to Dashboard</button>
+            {{else}}
             <button class="btn" onclick="window.open('/api/auth/signup', '_self')">Register</button>
             <button class="btn" onclick="window.open('/api/auth/login', '_self')">Login</button>
+            {{/isntEmpty}}
         </div>
     </header>
     {{!-- <div class="row gapped w-80">
@@ -48,32 +57,47 @@
         </div>
     </div> --}}
     <footer>
-        <div class="main">
-            <h2>Power Tools</h2>
-            <p>A platform which makes it easier for students in EAST to manage their projects; solo or in a group setting.</p>
-            <div class="flex-row gapped">
-                <a class="btn flex-1" href="/api/auth/register">Register</a>
-                <a class="btn flex-1" href="/api/auth/login">Login</a>
+        <div class="footer-row">
+            <div class="main">
+                <h2>Power Tools</h2>
+                <p>A platform which makes it easier for students in EAST to manage their projects; solo or in a group setting.</p>
+                <div class="gapped">
+                    {{#isntEmpty user}}
+                    <a class="btn flex-1" href="/api/auth/logout">Logout</a>
+                    {{else}}
+                    <a class="btn flex-1" href="/api/auth/register">Register</a>
+                    <a class="btn flex-1" href="/api/auth/login">Login</a>
+                    {{/isntEmpty}}
+                </div>
+            </div>
+            <div>
+                <h4>Product</h4>
+                <a href="#">Help Center</a>
+                {{#isntEmpty user}}
+                <a href="/dashboard">Dashboard</a>
+                <a href="#">Help Center</a>
+                <a href="/api/auth/logout">Logout</a>
+                {{else}}
+                <a href="#">Register</a>
+                <a href="#">Login</a>
+                {{/isntEmpty}}
+            </div>
+            <div>
+                <h4>Development</h4>
+                <a href="#">Branding Guide</a>
+                <a href="#">Bug Reports</a>
+                <a href="#">Source</a>
+            </div>
+            <div>
+                <h4>Project</h4>
+                <a href="#">Team Members</a>
+                <a href="#">Project Roadmap</a>
+                <a href="#">Articles</a>
+                <a href="#">Deadlines</a>
             </div>
         </div>
-        <div>
-            <h4>Product</h4>
-            <a href="#">Help Center</a>
-            <a href="#">Register</a>
-            <a href="#">Login</a>
-        </div>
-        <div>
-            <h4>Development</h4>
-            <a href="#">Branding Guide</a>
-            <a href="#">Bug Reports</a>
-            <a href="#">Source</a>
-        </div>
-        <div>
-            <h4>Project</h4>
-            <a href="#">Team Members</a>
-            <a href="#">Project Roadmap</a>
-            <a href="#">Articles</a>
-            <a href="#">Deadlines</a>
+        <div class="bottom">
+            <a href="https://eastinitiative.org"><img src="/public/logo.png"></a>
         </div>
     </footer>
 </body>

@@ -14,6 +14,6 @@ function post (req, res, passport) {
 }
 
 module.exports.mod = app => {
-    app.post('/api/auth/login', (req, res) => post(req, res, require('../../server').passport))
-    app.get('/api/auth/login', (req, res) => res.render(`${__dirname}/../../views/login`))
+    app.post('/api/auth/login', require('../ensureNotAuth'), (req, res) => post(req, res, require('../../server').passport))
+    app.get('/api/auth/login', require('../ensureNotAuth'), (req, res) => res.render(`${__dirname}/../../views/login`))
 }

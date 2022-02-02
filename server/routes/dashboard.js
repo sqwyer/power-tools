@@ -1,5 +1,10 @@
+const { find } = require('./user');
+
 function get (req, res) {
-    res.render(`${__dirname}/../../views/dashboard`)
+    find(req.user.email, r => {
+        if(r != undefined && r.data) res.render(`${__dirname}/../../views/dashboard`, { user: r.data.user });
+        else res.redirect('/');
+    });
 }
 
 module.exports.mod = app => {
