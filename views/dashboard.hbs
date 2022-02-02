@@ -12,15 +12,7 @@
     <title>Power Tools</title>
 </head>
 <body>
-    <div class="nav">
-        <a class="title" href="/">PowerTools</a>
-        <div class="links">
-            <a href="#">Articles</a>
-            <a href="#">Help Center</a>
-            <a href="/dashboard">Dashboard</a>
-            <a class="btn" href="/api/auth/logout">Logout</a>
-        </div>
-    </div>
+    {{>nav}}
     <div class="container">
         <h2 class="push-up-small">My Projects <a href="#">(Create New Project)</a></h2>
         <div class="row gapped">
@@ -45,38 +37,6 @@
             </div>
         </div>
     </div>
-    <footer>
-        <div class="footer-row">
-            <div class="main">
-                <h2>Power Tools</h2>
-                <p>A platform which makes it easier for students in EAST to manage their projects; solo or in a group setting.</p>
-                <div class="flex-row gapped">
-                    <a class="btn" href="/api/auth/logout">Logout</a>
-                </div>
-            </div>
-            <div>
-                <h4>Product</h4>
-                <a href="/dashboard">Dashboard</a>
-                <a href="#">Help Center</a>
-                <a href="/api/auth/logout">Logout</a>
-            </div>
-            <div>
-                <h4>Development</h4>
-                <a href="#">Branding Guide</a>
-                <a href="#">Bug Reports</a>
-                <a href="#">Source</a>
-            </div>
-            <div>
-                <h4>Project</h4>
-                <a href="#">Team Members</a>
-                <a href="#">Project Roadmap</a>
-                <a href="#">Articles</a>
-                <a href="#">Deadlines</a>
-            </div>
-        </div>
-        <div class="bottom">
-            <a href="https://eastinitiative.org"><img src="/public/logo.png"></a>
-        </div>
-    </footer>
+    {{> footer}}
 </body>
 </html>

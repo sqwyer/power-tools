@@ -13,15 +13,7 @@
     <title>Power Tools</title>
 </head>
 <body>
-    <div class="nav">
-        <a class="title" href="/">PowerTools</a>
-        <div class="links">
-            <a href="#">Articles</a>
-            <a href="#">Help Center</a>
-            <a href="/api/auth/register">Register</a>
-            <a href="/api/auth/login" class="btn">Login</a>
-        </div>
-    </div>
+    {{> nav}}
     <form action="/api/auth/login" method="POST">
         <label for="email">Email</label>
         <input name="email" type="email" placeholder="johndoe@gmail.com" required>
@@ -30,39 +22,6 @@
         <button class="btn primary">Login</button>
         <p>Don't have an account? <a href="/api/auth/signup">Register</a></p>
     </form>
-    <footer>
-        <div class="footer-row">
-            <div class="main">
-                <h2>Power Tools</h2>
-                <p>A platform which makes it easier for students in EAST to manage their projects; solo or in a group setting.</p>
-                <div class="flex-row gapped">
-                    <a class="btn flex-1" href="/api/auth/register">Register</a>
-                    <a class="btn flex-1" href="/api/auth/login">Login</a>
-                </div>
-            </div>
-            <div>
-                <h4>Product</h4>
-                <a href="#">Help Center</a>
-                <a href="/api/auth/register">Register</a>
-                <a href="/api/auth/login">Login</a>
-            </div>
-            <div>
-                <h4>Development</h4>
-                <a href="#">Branding Guide</a>
-                <a href="#">Bug Reports</a>
-                <a href="#">Source</a>
-            </div>
-            <div>
-                <h4>Project</h4>
-                <a href="#">Team Members</a>
-                <a href="#">Project Roadmap</a>
-                <a href="#">Articles</a>
-                <a href="#">Deadlines</a>
-            </div>
-        </div>
-        <div class="bottom">
-            <a href="https://eastinitiative.org"><img src="/public/logo.png"></a>
-        </div>
-    </footer>
+    {{> footer}}
 </body>
 </html>

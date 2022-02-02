@@ -1,0 +1,14 @@
+<div class="nav">
+    <a class="title" href="/">PowerTools</a>
+    <div class="links">
+        <a href="#">Articles</a>
+        <a href="#">Help Center</a>
+        {{#isntEmpty user}}
+        <a href="/dashboard">Dashboard</a>
+        <a class="btn" href="/api/auth/logout">Logout</a>
+        {{else}}
+        <a href="/api/auth/register">Register</a>
+        <a href="/api/auth/login" class="btn">Login</a>
+        {{/isntEmpty}}
+    </div>
+</div>
