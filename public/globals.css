@@ -70,6 +70,7 @@ a {
     background: #fff;
     font-size: 100%;
     cursor: pointer;
+    text-align: center;
 }
 
 .btn:hover {
@@ -248,4 +249,31 @@ footer .bottom img {
 
 footer .bottom img:hover {
     opacity: 0.3;
+}
+
+@media only screen and (max-width: 1050px) {
+    footer .btn {
+        display: block;
+    }
+}
+
+@media only screen and (max-width: 1000px) {
+    .nav .links *:not(.important) { display: none }
+    footer .btn { display: initial; }
+    footer .footer-row {
+        flex-direction: column;
+    }
+
+    footer .footer-row div {
+        flex: 1;
+    }
+
+    footer .footer-row .main * {
+        max-width: 100%;
+    }
+    .left-on-small {
+        text-align: left;
+        margin: inherit 0;
+        justify-content: left;
+    }
 }

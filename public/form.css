@@ -33,3 +33,24 @@ form input {
 form a {
     color: rgb(19,112,243);
 }
+
+@media only screen and (max-width: 1300px) {
+    form {
+        width: 30vw
+    }
+}
+@media only screen and (max-width: 1000px) {
+    form {
+        width: 50vw
+    }
+}
+@media only screen and (max-width: 800px) {
+    form {
+        width: 70vw
+    }
+}
+@media only screen and (max-width: 500px) {
+    form {
+        width: 90vw
+    }
+}
