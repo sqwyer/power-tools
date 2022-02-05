@@ -22,13 +22,13 @@ a {
 }
 
 .container {
-    padding: 2em 3em;
+    padding: 2em 6em;
 }
 
 .nav {
     display: flex;
     border-bottom: 1px solid #eee;
-    padding: 2em 3em;
+    padding: 2em 6em;
     justify-content: center;
 }
 
