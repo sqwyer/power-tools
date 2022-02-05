@@ -119,8 +119,7 @@ a {
 }
 
 .col.shortened {
-    flex-basis: 20%;
-    flex: initial;
+    max-width: 23.5vw;
 }
 
 .block {
@@ -189,7 +188,6 @@ footer {
     display: flex;
     margin-top: auto;
     gap: 10px;
-    border-top: 1px solid #eee;
 }
 
 footer .btn {
@@ -258,6 +256,11 @@ footer .bottom img:hover {
 }
 
 @media only screen and (max-width: 1000px) {
+
+    .col {
+        max-width: 50vw;
+    }
+
     .nav .links *:not(.important) { display: none }
     footer .btn { display: initial; }
     footer .footer-row {

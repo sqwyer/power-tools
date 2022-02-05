@@ -3,16 +3,17 @@ const conn = mongoose.createConnection(process.env.MONGO_URI);
 
 const ProjectSchema = mongoose.Schema({
     name: String,
-    email: String,
-    graduates: Number,
+    description: String,
+    problem: String,
+    solution: String,
     roles: {
         type: Array,
         default: [{
             name: 'Manager',
-            permissions: {}
+            permissions: ['admin']
         }, {
             name: 'Member',
-            permissions: {}
+            permissions: ['tasks', 'general']
         }]
     },
     members: {
@@ -22,6 +23,10 @@ const ProjectSchema = mongoose.Schema({
     invites: {
         type: Array,
         default: []
+    },
+    state: {
+        type: Number,
+        default: 0
     }
 })
 const ProjectModel = conn.model('project', ProjectSchema, 'projects')

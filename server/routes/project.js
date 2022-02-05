@@ -1,8 +1,9 @@
 const { ProjectModel } = require('../../models/Project')
+const { can } = require('../helpers/can')
 const debug = require('../debug')
 
-function find (email, next) {
-    ProjectModel.findOne({email}).exec(function (err, project) {
+function find (id, next) {
+    ProjectModel.findById(id).exec((err, project) => {
         if(err) debug(err, function () {return next({error: 'Internal error.'})})
         else if(!project) return next({error: 'Invalid user email.'})
         else if(project) {
@@ -12,15 +13,26 @@ function find (email, next) {
 }
 
 function get (req, res) {
-    let email = req.query.email
-    find(email, data => {
+    let id = req.query.id;
+    find(id, data => {
         if(data) res.json(data)
         else res.json({error: 'Internal error.'})
     })
 }
 
+function getProjectPage (req, res) {
+    can(req.user.email, req.params.id, info => {
+        if(info.error) debug(info.error, () => res.redirect('/dashboard'));
+        else {
+            let { user, project } = info;
+            res.render(`${__dirname}/../../views/project`, {user, project});
+        }
+    });
+}
+
 module.exports.mod = app => {
     app.get('/api/project', get)
+    app.get('/project/:id', require('../ensureAuth'), getProjectPage)
 }
 
 module.exports.find = find;

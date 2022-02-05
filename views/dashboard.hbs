@@ -14,14 +14,20 @@
 <body>
     {{>nav}}
     <div class="container">
-        <h2 class="push-up-small">My Projects <a href="#">(Create New Project)</a></h2>
+        <h2 class="push-up-small">My Projects ({{projects.length}}) <a href="/project/new">(Create New Project)</a></h2>
+        {{#isntEmpty projects}}
         <div class="row gapped">
+            {{#each projects}}
             <div class="col shortened">
-                <h4 class="push-up-small">Project Name</h4>
-                <p class="push-up-small">This is just a typical EAST project... nothing to see here...</p>
-                <button class="btn primary block">Manage</button>
+                <h4 class="push-up-small">{{name}}</h4>
+                <p class="push-up-small">{{description}}</p>
+                <button class="btn primary block" onclick="window.open('/project/{{_id}}', '_self')">Manage</button>
             </div>
+            {{/each}}
         </div>
+        {{else}}
+        <p>You have no projects...</p>
+        {{/isntEmpty}}
     </div>
 
     <div class="container">
