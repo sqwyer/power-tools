@@ -8,16 +8,35 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/public/globals.css">
+    <link rel="stylesheet" href="/public/form.css">
+    <link rel="stylesheet" href="/public/project.css">
     <title>Power Tools</title>
 </head>
 <body>
     {{>nav}}
-    <div class="container">
-        <h2>{{project.name}}</h2>
-        <p>{{project.description}}</p>
-        <p>{{project.problem}}</p>
-        <p>{{project.solution}}</p>
+    <div class="container flex-row">
+        {{> sidebar}}
+        <div class="col">
+            <h1>{{project.name}}</h1>
+            <p class="push-up">{{project.description}}</p>
+            <form class="no-padding" id="form-1" action="/project/{{project.id}}/action/update" method="POST">
+                <div class="flex-row no-padding">
+                    <label class="col">Problem</label>
+                    <label class="col">Solution</label>
+                </div>
+                <div class="flex-row no-padding">
+                    <textarea class="col" name="problem" type="text">{{project.problem}}</textarea>
+                    <textarea class="col" name="solution" type="text">{{project.solution}}</textarea>
+                </div>
+                <button class="btn primary submit-btn" type="submit" disabled>Submit Changes</button>
+            </form>
+        </div>
     </div>
     {{> footer}}
+
+    <script src="/public/js/project.js"></script>
+    <script>
+        watch("form-1");
+    </script>
 </body>
 </html>

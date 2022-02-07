@@ -14,13 +14,11 @@ function post (req, res) {
         if(r != undefined && r.data) {
             let { user } = r.data;
             let project = {};
-            console.log(req.body);
             for(let key in req.body) {
                 if(typeof req.body[key] == 'string' && req.body[key].replace(' ','')!='') {
                     project[key] = req.body[key]
                 } else if (typeof req.body[key] != 'string') project[key] = req.body.key;
                 else {
-                    console.log(req.body[key], key);
                     res.redirect('/project/new?error=Fields cannot be empty.');
                     return;
                 }

@@ -160,6 +160,28 @@ a {
     color: #fff;
 }
 
+.btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.btn:disabled:hover {
+    background:#fff;
+    color:#000;
+}
+
+.btn.danger:disabled {
+    color: rgb(227, 43, 43);
+}
+
+.btn.success:disabled:hover {
+    color: rgb(43, 227, 124);
+}
+
+.btn.primary:disabled:hover {
+    color: rgb(19,112,243);
+}
+
 .middle {
     justify-items: center;
     align-items: center;
