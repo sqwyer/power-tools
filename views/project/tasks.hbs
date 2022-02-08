@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/public/globals.css">
+    <link rel="stylesheet" href="/public/form.css">
+    <link rel="stylesheet" href="/public/project.css">
+    <title>Power Tools</title>
+</head>
+<body>
+    {{>nav}}
+    <div class="container flex-row">
+        {{> sidebar}}
+        <div class="col">
+            <h1>Project Tasks</h1>
+            {{#ifEmpty tasks}}
+            <p>This project has no task lists...</p>
+            {{else}}
+            {{#each tasks}}
+                <div class="tasklist">
+                    <div class="heading">
+                        <span>{{name}}</span>
+                        <span>Edit</span>
+                        <span>Add</span>
+                    </div>
+                    <div class="content">
+                    {{#ifEmpty tasks}}
+                    <p>There are no tasks under this category.</p>
+                    {{else}}
+                    <div class="tasks">
+                    {{#each tasks}}
+                        <div class="task">
+                            <div class="section">
+                                <h4>{{title}}</h4>
+                                <p>{{note}}</p>
+                            </div>
+                            <div class="section">
+                                {{#ifEmpty due}}
+                                <a href="/project/{{@root/project.id}}/1/{{id}}">No due date.</a>
+                                {{else}}
+                                <a href="/project/{{@root/project.id}}/1/{{id}}">Due {{due}}.</a>
+                                {{/ifEmpty}}
+                            </div>
+                        </div>
+                    {{/each}}
+                    </div>
+                    {{/ifEmpty}}
+                    </div>
+                </div>
+            {{/each}}
+            {{/ifEmpty}}
+        </div>
+    </div>
+    {{> footer}}
+</body>
+</html>

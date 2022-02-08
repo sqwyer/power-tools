@@ -27,6 +27,26 @@ const ProjectSchema = mongoose.Schema({
     state: {
         type: Number,
         default: 0
+    },
+    tasks: {
+        type: Array,
+        default: [
+            {
+                name: 'To-dos',
+                id: new mongoose.Types.ObjectId(),
+                tasks: []
+            },
+            {
+                name: 'In Progress',
+                id: new mongoose.Types.ObjectId(),
+                tasks: []
+            },
+            {
+                name: 'Completed',
+                id: new mongoose.Types.ObjectId(),
+                tasks: []
+            }
+        ]
     }
 })
 const ProjectModel = conn.model('project', ProjectSchema, 'projects')

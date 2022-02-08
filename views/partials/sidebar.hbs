@@ -10,9 +10,16 @@
     let s = document.getElementById('sidebar');
 
     [...s.children].forEach((child, index) => {
-        child.id = `sidebar-${index+1}`;
-        if(window.location.pathname.split('/').length > 3 && window.location.pathname.split('/')[2] == index) child.classList.add('active');
+
+        child.id = `sidebar-${index}`;
+
+        console.log(index, child);
+
+        if(window.location.pathname.split('/').length >= 4 && window.location.pathname.split('/')[3] == index) child.classList.add('active');
+        else if(window.location.pathname.split('/').length < 4) document.getElementById('sidebar-0').classList.add('active');
+        if(index != 0) child.setAttribute('href', `/project/${window.location.pathname.split('/')[2]}/${index}`);
+        else child.setAttribute('href', `/project/${window.location.pathname.split('/')[2]}`);
     });
 
-    if(window.location.pathname.split('/').length <= 3) document.getElementById('sidebar-1').classList.add('active');
+    if(window.location.pathname.split('/').length <= 3) document.getElementById('sidebar-0').classList.add('active');
 </script>
