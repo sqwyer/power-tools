@@ -1,7 +1,18 @@
-<div class="col short">
+<div class="col short" id="sidebar">
     <a class="btn">General</a>
     <a class="btn">Tasks</a>
     <a class="btn">Members</a>
     <a class="btn">Roles</a>
     <a class="btn">Settings</a>
 </div>
+
+<script>
+    let s = document.getElementById('sidebar');
+
+    [...s.children].forEach((child, index) => {
+        child.id = `sidebar-${index+1}`;
+        if(window.location.pathname.split('/').length > 3 && window.location.pathname.split('/')[2] == index) child.classList.add('active');
+    });
+
+    if(window.location.pathname.split('/').length <= 3) document.getElementById('sidebar-1').classList.add('active');
+</script>
