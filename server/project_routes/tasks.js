@@ -9,10 +9,7 @@ function get (req, res) {
         else if(!data.user) res.redirect('/api/auth/login')
         else {
             let { project, user, member, role } = data;
-            let { tasks } = project;
-
-            if(tasks == undefined || tasks.length == 0) return res.render(path, { tasks: [], project, user, member, role });
-            else res.render(path, { tasks: [], project, user, member, role });
+            res.render(path, {project, user, member, role});
         }
     })
 }

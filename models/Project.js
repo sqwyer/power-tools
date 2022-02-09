@@ -34,7 +34,13 @@ const ProjectSchema = mongoose.Schema({
             {
                 name: 'To-dos',
                 id: new mongoose.Types.ObjectId(),
-                tasks: []
+                tasks: [{
+                    name: 'Create Tasks',
+                    note: 'Create and assign the tasks needed to complete your project to help figure out the next steps at any given time!',
+                    due: '',
+                    assigned: [],
+                    id: new mongoose.Types.ObjectId()
+                }]
             },
             {
                 name: 'In Progress',

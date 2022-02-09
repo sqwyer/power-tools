@@ -1,13 +1,49 @@
+.lists {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    margin-top: 10px;
+}
+
 .tasklist {
+    flex: 1;
+    max-width: 33.3vw;
     border: 1.5px solid #eee;
-    padding: 0;
-    margin-right: 10px;
+    border-radius: 4px;
 }
 
-.tasklist .header {
-    padding: 0.5em;
+.tasklist .heading, .tasklist .content {
+    display: flex;
+    padding: 1em;
 }
 
-.tasklist .content {
-    padding: 0.5em;
+.tasklist .heading {
+    flex-direction: row;
+    border-bottom: 1.5px solid #eee;
+}
+
+.tasklist .heading span:not(:first-of-type):not(:last-of-type) {
+    margin-left: auto;
+    display: inline-flex;
+}
+
+.tasklist .heading span:last-of-type {
+    margin-left: 10px;
+}
+
+.tasklist .heading span:first-of-type {
+    font-weight: bold;
+}
+
+.tasklist .content .task {
+    border: 1.5px solid #eee;
+    border-radius: 4px;
+}
+
+.tasklist .content .task .section {
+    padding: 1em;
+}
+
+.tasklist .content .task .section:not(:last-of-type) {
+    border-bottom: 1.5px solid #eee;
 }

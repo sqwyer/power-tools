@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/public/globals.css">
     <link rel="stylesheet" href="/public/form.css">
     <link rel="stylesheet" href="/public/project.css">
+    <link rel="stylesheet" href="/public/project/tasks.css">
     <title>Power Tools</title>
 </head>
 <body>
@@ -18,41 +19,44 @@
         {{> sidebar}}
         <div class="col">
             <h1>Project Tasks</h1>
-            {{#ifEmpty tasks}}
+            {{#ifEmpty project.tasks}}
             <p>This project has no task lists...</p>
             {{else}}
-            {{#each tasks}}
+            <div class="lists">
+                {{#each project.tasks}}
                 <div class="tasklist">
                     <div class="heading">
                         <span>{{name}}</span>
-                        <span>Edit</span>
-                        <span>Add</span>
+                        <span><a href="#">Edit</a></span>
+                        <span><a href="#">Add</a></span>
                     </div>
                     <div class="content">
-                    {{#ifEmpty tasks}}
-                    <p>There are no tasks under this category.</p>
-                    {{else}}
-                    <div class="tasks">
-                    {{#each tasks}}
-                        <div class="task">
-                            <div class="section">
-                                <h4>{{title}}</h4>
-                                <p>{{note}}</p>
+                        {{#ifEmpty tasks}}
+                        <p>There are no tasks under this category.</p>
+                        {{else}}
+                        <div class="tasks">
+                        {{#each tasks}}
+                            <div class="task">
+                                <div class="section">
+                                    <h4 class="push-up-small">{{name}}</h4>
+                                    <p>{{note}}</p>
+                                </div>
+                                <div class="section">
+                                    {{#ifEmpty due}}
+                                    <a href="/project/{{@root/project.id}}/1/{{id}}">No due date.</a>
+                                    {{else}}
+                                    <a href="/project/{{@root/project.id}}/1/{{id}}">Due {{due}}.</a>
+                                    {{/ifEmpty}}
+                                </div>
                             </div>
-                            <div class="section">
-                                {{#ifEmpty due}}
-                                <a href="/project/{{@root/project.id}}/1/{{id}}">No due date.</a>
-                                {{else}}
-                                <a href="/project/{{@root/project.id}}/1/{{id}}">Due {{due}}.</a>
-                                {{/ifEmpty}}
-                            </div>
+                        {{/each}}
                         </div>
-                    {{/each}}
-                    </div>
-                    {{/ifEmpty}}
+                        {{/ifEmpty}}
                     </div>
                 </div>
             {{/each}}
+            </div>
+
             {{/ifEmpty}}
         </div>
     </div>
