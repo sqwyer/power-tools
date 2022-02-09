@@ -54,7 +54,7 @@ function post (req, res) {
                     })
                 })
                 .catch(err => debug(err, () => res.render(template, {errorMessage: "Internal error."})))
-        }).catch(err => debug(err, res.render(template, {errorMessage: "Internal error."})))
+        }).catch(err => debug(err, () => res.render(template, {errorMessage: "Internal error."})))
 }
 
 module.exports.mod = app => {

@@ -43,9 +43,9 @@
                                 </div>
                                 <div class="section">
                                     {{#ifEmpty due}}
-                                    <a href="/project/{{@root/project.id}}/1/{{id}}">No due date.</a>
+                                    <a href="/project/{{@root/project.id}}/1/{{../id}}/{{id}}">No due date.</a>
                                     {{else}}
-                                    <a href="/project/{{@root/project.id}}/1/{{id}}">Due {{due}}.</a>
+                                    <a href="/project/{{@root/project.id}}/1/{{../id}}/{{id}}">Due {{due}}.</a>
                                     {{/ifEmpty}}
                                 </div>
                             </div>

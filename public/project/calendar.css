@@ -1,0 +1,18 @@
+.month {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.week {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
+.day {
+    flex: 1;
+    max-width: 14vw;
+    padding: 1em;
+    background: #f5f5f5;
+}
