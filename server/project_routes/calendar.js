@@ -24,7 +24,7 @@ function get (req, res) {
             for(let i = 1; i < days; i++) {
 
                 if(general[iter] == undefined) general[iter] = [];
-                general[iter].push({date: i, tasks: tasks.filter(due => due)});
+                general[iter].push({date: i, tasks: tasks.filter(due => due), passed: (i<date), today: (i==date)});
                 if(i%7 == 0) iter++;
                 if(i+1 == days) {
                     let calendar = {

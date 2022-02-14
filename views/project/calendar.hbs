@@ -19,11 +19,13 @@
         {{> sidebar}}
         <div class="col">
             <h1>{{project.name}} Calendar</h1>
+            <h2>{{calendar.month}}, {{calendar.year}}</h2>
+            <br />
             <div class="month">
                 {{#each calendar.general}}
                 <div class="week">
                     {{#each this}}
-                    <div class="day {{#if passed}}passed{{/if}} {{#if today}}today{{/if}}">{{date}}</div>
+                    <div class="day {{#if passed}}passed{{/if}} {{#if today}}today{{/if}}">{{date}} ({{tasks.length}})</div>
                     {{/each}}
                 </div>
                 {{/each}}

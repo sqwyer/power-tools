@@ -40,6 +40,9 @@
     border-radius: 4px;
     transition: 0.1s;
     cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    width: 170%;
 }
 
 .tasklist .content .task .section {
