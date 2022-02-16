@@ -1,0 +1,26 @@
+.member:not(:last-of-type) {
+    border-bottom: 1.5px solid #eee;
+}
+
+.member {
+    padding: 1.5em 0;
+    display: flex;
+    align-items: center;
+}
+
+.member span:not(:first-child) {
+    margin-left: 1em;
+}
+
+.member span.right {
+    margin-left: auto;
+}
+
+.light {
+    color: #505050;
+}
+
+span.name {
+    font-weight: bold;
+    font-size: 120%;
+}
