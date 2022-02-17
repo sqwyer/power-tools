@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/public/globals.css">
     <link rel="stylesheet" href="/public/project.css">
     <link rel="stylesheet" href="/public/project/members.css">
+     <link rel="stylesheet" href="/public/select.css">
     <title>Power Tools</title>
 </head>
 <body>
@@ -24,12 +25,25 @@
                 <div class="member">
                     <span class="name">{{name}}</span>
                     <span class="light">{{email}}</span>
-                    <span class="right">{{role}}</span>
+                    <span class="right">
+                        <form action="/project/{{../project.id}}/2/updateRole/{{id}}" id="update-{{../project.id}}-{{id}}" method="POST">
+                            <select name="role" class="minimal" onchange="updateUserRole('{{id}}', '{{../project.id}}')">
+                                {{#each ../project.roles}}
+                                <option {{#ifEquals this.name ../role}}selected{{/ifEquals}} value="{{this.name}}">{{this.name}}</option>
+                                {{/each}}
+                            </select>
+                        </form>
+                    </span>
+                    <span>
+                        <button class="btn danger">Remove</button>
+                    </span>
                 </div>
                 {{/each}}
             </div>
         </div>
     </div>
     {{> footer}}
+
+    <script src="/public/js/members.js"></script>
 </body>
 </html>

@@ -16,7 +16,7 @@ module.exports.can = (email, project, next, perm) => {
                         let role = project.roles.find(s=>s.name===member.role);
                         if(!role) next({error: 'User\'s role does not exist.'});
                         else {
-                            if(perm != undefined) role.permissions.contains(perm) ? next({project, user, role}) : next({error: 'No permission.'});
+                            if(perm != undefined) role.permissions.includes(perm) || role.permissions.includes('admin') ? next({project, user, role}) : next({error: 'No permission.'});
                             else next({project, user, role, member});
                         }
                     }
