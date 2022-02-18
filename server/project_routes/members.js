@@ -14,7 +14,18 @@ function get (req, res) {
                     else {
                         members.push({...project.members[i], name: data.name, id: data._id.toString()});
                         if(i+1==project.members.length) {
-                            res.render(`${__dirname}/../../views/project/members`, {project, member, user, role, members});
+                            let invites = [];
+                            if(project.invites.length >= 1) {
+                                for(let k = 0; k < project.invites.length; k++) {
+                                    UserModel.findOne({id: project.invites[k]}, (err2, user) => {
+                                        if(err2) debug(err2, () => {})
+                                        else {
+                                            invites.push({...project.invites[k], name: user.name, email: user.email, id: user._id.toString()})
+                                            if(k+1==project.invites.length) res.render(`${__dirname}/../../views/project/members`, {project, member, user, role, members, invites});
+                                        }
+                                    })
+                                }
+                            } else res.render(`${__dirname}/../../views/project/members`, {project, member, user, role, members, invites});
                         }
                     }
                 })
@@ -61,20 +72,20 @@ function inviteMember (req, res) {
         if(data.error) debug(data.error, () => res.redirect('/'));
         else {
             let { project } = data;
-            let invites = { project };
+            let { invites } = project;
 
             if(invites.includes(req.body.member)) res.redirect(`/project/${data.project._id.toString()}/2`);
             else {
-                let member = project.members.find(self => self.id.toString() === req.body.member);
+                let member = project.members.find(self => self.email.toLowerCase() == req.body.member.toLowerCase());
                 if(member) res.redirect(`/project/${data.project._id.toString()}/2`);
                 else {
-                    UserModel.findOne({id: req.body.member}).exec((err, user) => {
+                    UserModel.findOne({email: req.body.member}).exec((err, user) => {
                         if(err) debug(err, () => res.redirect(`/project/${data.project._id.toString()}/2`));
                         else if(!user) res.redirect(`/project/${data.project._id.toString()}/2`);
                         else {
                             user.invites.push(project._id.toString());
                             user.markModified('invites');
-                            project.invites.push(req.body.member);
+                            project.invites.push(user._id.toString());
                             project.markModified('invites');
                             project.save(err => {
                                 if(err) debug(err, () => {});
@@ -91,7 +102,11 @@ function inviteMember (req, res) {
     }, 'manageMembers');
 }
 
-function cancelInvite (req, res) {}
+function cancelInvite (req, res) {
+    can(req.user.email, req.params.id, data => {
+        
+    }, 'manageMembers')
+}
 
 function acceptInvite (req, res) {}
 
@@ -100,4 +115,8 @@ function denyInvite (req, res) {}
 module.exports.mod = app => {
     app.get('/project/:id/2', require('../ensureAuth'), get)
     app.post('/project/:id/2/updateRole/:user', require('../ensureAuth'), updateRole)
+    app.post('/project/:id/2/invite/send', require('../ensureAuth'), inviteMember)
+    // app.post('/project/:id/2/invite/cancel', require('../ensureAuth'), inviteMember)
+    // app.post('/project/:id/2/invite/accept', require('../ensureAuth'), inviteMember)
+    // app.post('/project/:id/2/invite/deny', require('../ensureAuth'), inviteMember)
 }

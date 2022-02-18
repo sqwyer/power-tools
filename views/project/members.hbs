@@ -8,9 +8,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="/public/globals.css">
+    <link rel="stylesheet" href="/public/form.css">
     <link rel="stylesheet" href="/public/project.css">
     <link rel="stylesheet" href="/public/project/members.css">
-     <link rel="stylesheet" href="/public/select.css">
+    <link rel="stylesheet" href="/public/select.css">
     <title>Power Tools</title>
 </head>
 <body>
@@ -20,13 +21,14 @@
         <div class="col">
             <h1>Project Members</h1>
             <p>Manage the project's members.</p>
+            <br />
             <div class="members">
                 {{#each members}}
                 <div class="member">
                     <span class="name">{{name}}</span>
                     <span class="light">{{email}}</span>
                     <span class="right">
-                        <form action="/project/{{../project.id}}/2/updateRole/{{id}}" id="update-{{../project.id}}-{{id}}" method="POST">
+                        <form action="/project/{{../project.id}}/2/updateRole/{{id}}" id="update-{{../project.id}}-{{id}}" method="POST" class="form-exclude">
                             <select name="role" class="minimal" onchange="updateUserRole('{{id}}', '{{../project.id}}')">
                                 {{#each ../project.roles}}
                                 <option {{#ifEquals this.name ../role}}selected{{/ifEquals}} value="{{this.name}}">{{this.name}}</option>
@@ -40,6 +42,38 @@
                 </div>
                 {{/each}}
             </div>
+
+            <hr class="no-top">
+
+            <form class="invite" action="/project/{{project.id}}/2/invite/send" method="POST">
+                <div class="flex-row">
+                    <input name="member" type="email" placeholder="johndoe@gmail.com" />
+                    <button class="btn primary">Invite</button>
+                </div>
+            </form>
+
+            <hr>
+
+            {{#isntEmpty project.invites}}
+
+            <div class="invites">
+                {{!-- {{#each project.invites}} --}}
+                <div class="member">
+                    <span class="name">Name{{name}}</span>
+                    <span class="light">Email{{email}}</span>
+                    <span class="right">
+                        <form action="/project/{{../project.id}}/2/invite/cancel" method="POST" class="form-exclude">
+                            <button class="btn danger">Cancel</button>
+                        </form>
+                    </span>
+                </div>
+                {{!-- {{/each}} --}}
+            </div>
+
+            {{else}}
+            <p class="light">There are no outgoing invites.</p>
+
+            {{/isntEmpty}}
         </div>
     </div>
     {{> footer}}

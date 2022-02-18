@@ -1,9 +1,9 @@
-.member:not(:last-of-type) {
-    border-bottom: 1.5px solid #eee;
+.member:not(:first-child) {
+    border-top: 3px solid #eee;
 }
 
 .member {
-    padding: 1.5em 0;
+    padding: 1em 0;
     display: flex;
     align-items: center;
 }
@@ -23,4 +23,26 @@
 span.name {
     font-weight: bold;
     font-size: 120%;
+}
+
+.invite {
+    width: 100%!important;
+    margin: 0!important;
+    padding: 0!important;
+}
+
+.invite .flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.invite .flex-row .btn {
+    flex-basis: 20%;
+    height: 100%;
+    margin-top: 0;
+}
+
+.invite .flex-row input {
+    flex: 1;
+    height: 100%;
 }

@@ -271,6 +271,17 @@ footer .bottom img:hover {
     opacity: 0.3;
 }
 
+hr {
+    border: 1.5px solid #eee;
+    margin: 1.5em 0;
+    padding: 0;
+    background: #eee;
+}
+
+hr.no-top {
+    margin: 0 0 1.5em 0;
+}
+
 @media only screen and (max-width: 1050px) {
     footer .btn {
         display: block;
