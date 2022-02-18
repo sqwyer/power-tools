@@ -286,6 +286,11 @@ hr.no-top {
     display: none;
 }
 
+/* .subtitle, */
+.light {
+    color: #808080;
+}
+
 @media only screen and (max-width: 1050px) {
     footer .btn {
         display: block;

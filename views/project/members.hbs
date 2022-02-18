@@ -20,8 +20,7 @@
         {{> sidebar}}
         <div class="col">
             <h1>Project Members</h1>
-            <p>Manage the project's members.</p>
-            <br />
+            <p class="subtitle">Manage the project's members.</p>
             <div class="members">
                 {{#each members}}
                 <div class="member">
@@ -45,14 +44,16 @@
 
             <hr class="no-top">
 
+            <h1>Invite People</h1>
+            <p class="subtitle">Send an invite to join this project to somebody!</p>
+            <br > 
+
             <form class="invite" action="/project/{{project.id}}/2/invite/send" method="POST">
                 <div class="flex-row">
                     <input name="member" type="email" placeholder="johndoe@gmail.com" />
                     <button class="btn primary">Invite</button>
                 </div>
             </form>
-
-            <hr>
 
             {{#isntEmpty invites}}
 
@@ -72,6 +73,8 @@
             </div>
 
             {{else}}
+
+            <br />
             <p class="light">There are no outgoing invites.</p>
 
             {{/isntEmpty}}
