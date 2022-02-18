@@ -54,20 +54,21 @@
 
             <hr>
 
-            {{#isntEmpty project.invites}}
+            {{#isntEmpty invites}}
 
             <div class="invites">
-                {{!-- {{#each project.invites}} --}}
+                {{#each invites}}
                 <div class="member">
-                    <span class="name">Name{{name}}</span>
-                    <span class="light">Email{{email}}</span>
+                    <span class="name">{{name}}</span>
+                    <span class="light">{{email}}</span>
                     <span class="right">
                         <form action="/project/{{../project.id}}/2/invite/cancel" method="POST" class="form-exclude">
+                            <input class="hidden" name="member" value="{{id}}">
                             <button class="btn danger">Cancel</button>
                         </form>
                     </span>
                 </div>
-                {{!-- {{/each}} --}}
+                {{/each}}
             </div>
 
             {{else}}

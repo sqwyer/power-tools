@@ -17,10 +17,10 @@ function get (req, res) {
                             let invites = [];
                             if(project.invites.length >= 1) {
                                 for(let k = 0; k < project.invites.length; k++) {
-                                    UserModel.findOne({id: project.invites[k]}, (err2, user) => {
+                                    UserModel.findById(project.invites[k], (err2, user) => {
                                         if(err2) debug(err2, () => {})
                                         else {
-                                            invites.push({...project.invites[k], name: user.name, email: user.email, id: user._id.toString()})
+                                            invites.push({id: project.invites[k], name: user.name, email: user.email})
                                             if(k+1==project.invites.length) res.render(`${__dirname}/../../views/project/members`, {project, member, user, role, members, invites});
                                         }
                                     })
@@ -104,7 +104,34 @@ function inviteMember (req, res) {
 
 function cancelInvite (req, res) {
     can(req.user.email, req.params.id, data => {
-        
+        if(data.error) {
+            if(data.error == 'No permission.') res.redirect(`/project/${data.project._id.toString()}/2`);
+            else debug(data.error, () => {res.redirect('/')});
+        } else {
+            let { project } = data;
+            if(!project.invites.includes(req.body.member)) res.redirect(`/project/${data.project._id.toString()}/2`);
+            else {
+                UserModel.findById(req.body.member, (err, user) => {
+                    if(err) debug(err, () => res.redirect(`/project/${data.project._id.toString()}/2`));
+                    else if(!user) res.redirect(`/project/${data.project._id.toString()}/2`);
+                    else {
+                        let pI = user.invites.indexOf(project._id.toString());
+                        let uI = project.invites.indexOf(req.body.member);
+                        user.invites.splice(pI,1);
+                        user.markModified('invites');
+                        project.invites.splice(uI,1);
+                        project.markModified('invites');
+                        user.save(err2 => {
+                            if(err2) debug(err2, () => {});
+                            project.save(err3 => {
+                                if(err3) debug(err3, () => {});
+                                res.redirect(`/project/${data.project._id.toString()}/2`);
+                            })
+                        })
+                    }
+                })
+            }
+        }
     }, 'manageMembers')
 }
 
@@ -116,7 +143,7 @@ module.exports.mod = app => {
     app.get('/project/:id/2', require('../ensureAuth'), get)
     app.post('/project/:id/2/updateRole/:user', require('../ensureAuth'), updateRole)
     app.post('/project/:id/2/invite/send', require('../ensureAuth'), inviteMember)
-    // app.post('/project/:id/2/invite/cancel', require('../ensureAuth'), inviteMember)
+    app.post('/project/:id/2/invite/cancel', require('../ensureAuth'), cancelInvite)
     // app.post('/project/:id/2/invite/accept', require('../ensureAuth'), inviteMember)
     // app.post('/project/:id/2/invite/deny', require('../ensureAuth'), inviteMember)
 }

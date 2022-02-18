@@ -282,6 +282,10 @@ hr.no-top {
     margin: 0 0 1.5em 0;
 }
 
+.hidden {
+    display: none;
+}
+
 @media only screen and (max-width: 1050px) {
     footer .btn {
         display: block;
