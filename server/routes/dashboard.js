@@ -10,7 +10,16 @@ function get (req, res) {
             for(let i = 0; i < r.data.user.projects.length; i++) {
                 findProject(r.data.user.projects[i], info => {
                     if(info.data) projects.push(info.data.project);
-                    if((i+1)==r.data.user.projects.length) res.render(`${__dirname}/../../views/dashboard`, { user: r.data.user, projects });
+                    if((i+1)==r.data.user.projects.length) {
+                        let invites = [];
+                        if(r.data.user.invites.length != 0) for(let k = 0; k < r.data.user.invites.length; k++) {
+                            findProject(r.data.user.invites[k], info2 => {
+                                if(info2.data) invites.push(info2.data)
+                                if(i+1==r.data.user.invites.length) res.render(`${__dirname}/../../views/dashboard`, { user: r.data.user, projects, invites });
+                            })
+                        }
+                        else res.render(`${__dirname}/../../views/dashboard`, { user: r.data.user, projects, invites });
+                    }
                 });
             }
         }

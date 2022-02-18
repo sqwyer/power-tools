@@ -32,16 +32,26 @@
 
     <div class="container">
         <h2 class="push-up-small">Invites</h2>
+        {{#isntEmpty invites}}
         <div class="row gapped">
+            {{#each invites}}
             <div class="col shortened">
-                <h4 class="push-up-small">Project Name</h4>
-                <p class="push-up-small">This is just a typical EAST project... nothing to see here...</p>
+                <h4 class="push-up-small">{{name}}</h4>
+                <p class="push-up-small">{{description}}</p>
                 <div class="row gapped" style="width: 100%">
-                    <button class="btn success flex-1">Accept</button>
-                    <button class="btn danger flex-1">Deny</button>
+                    <form action="/project/{{../project.id}}/2/invite/accept" method="POST">
+                        <button class="btn success flex-1">Accept</button>
+                    </form>
+                    <form action="/project/{{../project.id}}/2/invite/deny" method="POST">
+                        <button class="btn danger flex-1">Deny</button>
+                    </form>
                 </div>
             </div>
+            {{/each}}
         </div>
+        {{else}}
+        <p>You have no incoming invites...</p>
+        {{/isntEmpty}}
     </div>
     {{> footer}}
 </body>

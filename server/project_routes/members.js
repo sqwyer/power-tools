@@ -9,8 +9,9 @@ function get (req, res) {
             let { project, member, user, role } = data;
             let members = [];
             for(let i = 0; i < project.members.length; i++) {
-                UserModel.findOne({email: project.members[i].email}).exec((err, data) => {
+                UserModel.findById(project.members[i].id).exec((err, data) => {
                     if(err) debug(err, ()=>{});
+                    else if(!data) debug(err, () => {});
                     else {
                         members.push({...project.members[i], name: data.name, id: data._id.toString()});
                         if(i+1==project.members.length) {
@@ -73,66 +74,88 @@ function inviteMember (req, res) {
         else {
             let { project } = data;
             let { invites } = project;
-
-            if(invites.includes(req.body.member)) res.redirect(`/project/${data.project._id.toString()}/2`);
-            else {
-                let member = project.members.find(self => self.email.toLowerCase() == req.body.member.toLowerCase());
-                if(member) res.redirect(`/project/${data.project._id.toString()}/2`);
+            UserModel.findOne({email: req.body.member}).exec((err, user) => {
+                if(err) debug(err, () => res.redirect(`/project/${data.project._id.toString()}/2`));
+                else if(!user) res.redirect(`/project/${data.project._id.toString()}/2`);
+                else if(invites.includes(user._id.toString())) res.redirect(`/project/${data.project._id.toString()}/2`);
+                else if(project.members.find(s=>s.id===user._id.toString())) res.redirect(`/project/${data.project._id.toString()}/2`);
                 else {
-                    UserModel.findOne({email: req.body.member}).exec((err, user) => {
-                        if(err) debug(err, () => res.redirect(`/project/${data.project._id.toString()}/2`));
-                        else if(!user) res.redirect(`/project/${data.project._id.toString()}/2`);
-                        else {
-                            user.invites.push(project._id.toString());
-                            user.markModified('invites');
-                            project.invites.push(user._id.toString());
-                            project.markModified('invites');
-                            project.save(err => {
-                                if(err) debug(err, () => {});
-                                user.save(err2 => {
-                                    if(err2) debug(err2, () => {});
-                                    res.redirect(`/project/${data.project._id.toString()}/2`);
-                                });
-                            });
-                        }
+                    user.invites.push(project._id.toString());
+                    user.markModified('invites');
+                    project.invites.push(user._id.toString());
+                    project.markModified('invites');
+                    project.save(err => {
+                        if(err) debug(err, () => {});
+                        user.save(err2 => {
+                            if(err2) debug(err2, () => {});
+                            res.redirect(`/project/${data.project._id.toString()}/2`);
+                        });
                     });
                 }
-            }
+            });
         }
     }, 'manageMembers');
 }
 
 function cancelInvite (req, res) {
+    // can(req.user.email, req.params.id, data => {
+    //     if(data.error) {
+    //         if(data.error == 'No permission.') res.redirect(`/project/${data.project._id.toString()}/2`);
+    //         else debug(data.error, () => {res.redirect('/')});
+    //     } else {
+    //         let { project } = data;
+    //         if(!project.invites.includes(req.body.member)) res.redirect(`/project/${data.project._id.toString()}/2`);
+    //         else {
+    //             UserModel.findById(req.body.member, (err, user) => {
+    //                 if(err) debug(err, () => res.redirect(`/project/${data.project._id.toString()}/2`));
+    //                 else if(!user) res.redirect(`/project/${data.project._id.toString()}/2`);
+    //                 else {
+    //                     let pI = user.invites.indexOf(project._id.toString());
+    //                     let uI = project.invites.indexOf(req.body.member);
+    //                     user.invites.splice(pI,1);
+    //                     user.markModified('invites');
+    //                     project.invites.splice(uI,1);
+    //                     project.markModified('invites');
+    //                     user.save(err2 => {
+    //                         if(err2) debug(err2, () => {});
+    //                         project.save(err3 => {
+    //                             if(err3) debug(err3, () => {});
+    //                             res.redirect(`/project/${data.project._id.toString()}/2`);
+    //                         })
+    //                     })
+    //                 }
+    //             })
+    //         }
+    //     }
+    // }, 'manageMembers')
+
     can(req.user.email, req.params.id, data => {
-        if(data.error) {
-            if(data.error == 'No permission.') res.redirect(`/project/${data.project._id.toString()}/2`);
-            else debug(data.error, () => {res.redirect('/')});
-        } else {
+        if(data.error) debug(data.error, () => res.redirect('/'));
+        else {
             let { project } = data;
-            if(!project.invites.includes(req.body.member)) res.redirect(`/project/${data.project._id.toString()}/2`);
-            else {
-                UserModel.findById(req.body.member, (err, user) => {
-                    if(err) debug(err, () => res.redirect(`/project/${data.project._id.toString()}/2`));
-                    else if(!user) res.redirect(`/project/${data.project._id.toString()}/2`);
-                    else {
-                        let pI = user.invites.indexOf(project._id.toString());
-                        let uI = project.invites.indexOf(req.body.member);
-                        user.invites.splice(pI,1);
-                        user.markModified('invites');
-                        project.invites.splice(uI,1);
-                        project.markModified('invites');
-                        user.save(err2 => {
-                            if(err2) debug(err2, () => {});
-                            project.save(err3 => {
-                                if(err3) debug(err3, () => {});
-                                res.redirect(`/project/${data.project._id.toString()}/2`);
-                            })
+            let { invites } = project;
+            UserModel.findOne({email: req.body.member}).exec((err, user) => {
+                if(err) debug(err, () => res.redirect(`/project/${data.project._id.toString()}/2`));
+                else if(!user) res.redirect(`/project/${data.project._id.toString()}/2`);
+                else if(!invites.includes(user._id.toString())) res.redirect(`/project/${data.project._id.toString()}/2`);
+                else {
+                    let pI = user.invites.indexOf(project._id.toString());
+                    let uI = project.invites.indexOf(req.body.member);
+                    user.invites.splice(pI,1);
+                    user.markModified('invites');
+                    project.invites.splice(uI,1);
+                    project.markModified('invites');
+                    user.save(err2 => {
+                        if(err2) debug(err2, () => {});
+                        project.save(err3 => {
+                            if(err3) debug(err3, () => {});
+                            res.redirect(`/project/${data.project._id.toString()}/2`);
                         })
-                    }
-                })
-            }
+                    })
+                }
+            });
         }
-    }, 'manageMembers')
+    }, 'manageMembers');
 }
 
 module.exports.mod = app => {
