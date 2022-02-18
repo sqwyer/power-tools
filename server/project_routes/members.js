@@ -134,13 +134,13 @@ function cancelInvite (req, res) {
         else {
             let { project } = data;
             let { invites } = project;
-            UserModel.findOne({email: req.body.member}).exec((err, user) => {
+            UserModel.findById(req.body.member).exec((err, user) => {
                 if(err) debug(err, () => res.redirect(`/project/${data.project._id.toString()}/2`));
                 else if(!user) res.redirect(`/project/${data.project._id.toString()}/2`);
                 else if(!invites.includes(user._id.toString())) res.redirect(`/project/${data.project._id.toString()}/2`);
                 else {
                     let pI = user.invites.indexOf(project._id.toString());
-                    let uI = project.invites.indexOf(req.body.member);
+                    let uI = project.invites.indexOf(user._id.toString());
                     user.invites.splice(pI,1);
                     user.markModified('invites');
                     project.invites.splice(uI,1);
