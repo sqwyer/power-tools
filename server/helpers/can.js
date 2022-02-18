@@ -10,7 +10,7 @@ module.exports.can = (email, project, next, perm) => {
                 if(err2) next({error: 'Internal error.'});
                 else if(!user) next({error: 'Project does not exist.'});
                 else {
-                    let member = project.members.find(s=>s.email===email);
+                    let member = project.members.find(s=>s.id===user._id.toString());
                     if(!member) next({error: 'User is not in project.'});
                     else {
                         let role = project.roles.find(s=>s.name===member.role);

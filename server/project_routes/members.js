@@ -135,15 +135,9 @@ function cancelInvite (req, res) {
     }, 'manageMembers')
 }
 
-function acceptInvite (req, res) {}
-
-function denyInvite (req, res) {}
-
 module.exports.mod = app => {
     app.get('/project/:id/2', require('../ensureAuth'), get)
     app.post('/project/:id/2/updateRole/:user', require('../ensureAuth'), updateRole)
     app.post('/project/:id/2/invite/send', require('../ensureAuth'), inviteMember)
     app.post('/project/:id/2/invite/cancel', require('../ensureAuth'), cancelInvite)
-    // app.post('/project/:id/2/invite/accept', require('../ensureAuth'), inviteMember)
-    // app.post('/project/:id/2/invite/deny', require('../ensureAuth'), inviteMember)
 }

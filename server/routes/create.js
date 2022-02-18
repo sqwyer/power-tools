@@ -25,7 +25,7 @@ function post (req, res) {
             }
             let newProject = new ProjectModel({
                 ...project,
-                members: [{email: user.email, role: 'Manager'}]
+                members: [{id: user._id.toString(), role: 'Manager'}]
             });
             newProject.save()
                 .then(() => {
