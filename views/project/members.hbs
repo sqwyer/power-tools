@@ -24,6 +24,9 @@
             <div class="members">
                 {{#each members}}
                 <div class="member">
+                    {{#ifEquals ../user.id id}}
+                    <span class="star">✰</span>
+                    {{/ifEquals}}
                     <span class="name">{{name}}</span>
                     <span class="light">{{email}}</span>
                     <span class="right">
@@ -36,7 +39,11 @@
                         </form>
                     </span>
                     <span>
+                        {{#ifEquals ../user.id id}}
+                        <button class="btn danger">Leave</button>
+                        {{else}}
                         <button class="btn danger">Remove</button>
+                        {{/ifEquals}}
                     </span>
                 </div>
                 {{/each}}

@@ -39,7 +39,7 @@ function updateRole (req, res) {
     can(req.user.email, req.params.id, data => {
         if(data.error) {
             if(data.error != 'No permission.') debug(data.error, () => res.redirect('/'));
-            else res.redirect(`/project/${data.project._id.toString()}/2`);
+            else res.redirect(`/project/${req.params.id}/2`);
         }
         else {
             let { project } = data;

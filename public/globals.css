@@ -272,14 +272,15 @@ footer .bottom img:hover {
 }
 
 hr {
-    border: 1.5px solid #eee;
+    /* border: .1px solid #eee; */
+    border: none;
     margin: 1.5em 0;
-    padding: 0;
     background: #eee;
+    padding: .75px;
 }
 
 hr.no-top {
-    margin: 0 0 1.5em 0;
+    margin: 0 0 0.75em 0;
 }
 
 .hidden {
