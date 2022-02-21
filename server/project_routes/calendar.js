@@ -21,6 +21,12 @@ function get (req, res) {
             let general = [];
             let iter = 0;
 
+            let firstDay = new Date(year + "-" + month + "-01").getDay();
+            for(let i = 0; i < firstDay; i++) {
+                if(general[iter] == undefined) general[iter] = [];
+                general[iter].push({blank: true});
+            }
+
             for(let i = 1; i < days; i++) {
 
                 if(general[iter] == undefined) general[iter] = [];

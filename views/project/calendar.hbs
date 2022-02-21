@@ -34,7 +34,11 @@
                 {{#each calendar.general}}
                 <div class="week">
                     {{#each this}}
+                    {{#if blank}}
+                    <div class="day {{#if passed}}passed{{/if}} {{#if today}}today{{/if}}"></div>
+                    {{else}}
                     <div class="day {{#if passed}}passed{{/if}} {{#if today}}today{{/if}}">{{date}}</div>
+                    {{/if}}
                     {{/each}}
                 </div>
                 {{/each}}
