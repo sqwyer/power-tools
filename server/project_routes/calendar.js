@@ -27,7 +27,7 @@ function get (req, res) {
                 general[iter].push({blank: true});
             }
 
-            for(let i = 1; i < days; i++) {
+            for(let i = firstDay+1; i < days; i++) {
 
                 if(general[iter] == undefined) general[iter] = [];
                 general[iter].push({date: i, tasks: tasks.filter(due => due), passed: (i<date), today: (i==date)});

@@ -20,7 +20,7 @@
     cursor: pointer;
     border: 1.5px solid #eee;
 }
-.week.head .day {
+.week.head .day, .week .day.blank {
     cursor: inherit;
 }
 .today {
@@ -28,6 +28,6 @@
     border: 1.5px solid rgb(43, 227, 124);
 }
 
-.day:not(.today):hover, .week.head .day {
+.day:not(.today):not(.blank):hover, .week.head .day {
     background: #eee;
 }
