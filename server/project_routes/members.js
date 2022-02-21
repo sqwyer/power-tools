@@ -43,13 +43,13 @@ function updateRole (req, res) {
         }
         else {
             let { project } = data;
-            let { role } = req.body.role;
+            let { role } = req.body;
             if(!role) res.redirect(`/project/${data.project._id.toString()}/2`);
             else {
                 let pRole = project.roles.find(self => self.name === role);
                 if(!pRole) res.redirect(`/project/${data.project._id.toString()}/2`);
                 else {
-                    let member = project.members.find(self => self._id.toString() == req.params.user);
+                    let member = project.members.find(self => self.id.toString() == req.params.user);
                     if(!member) res.redirect(`/project/${data.project._id.toString()}/2`);
                     else {
                         if(member.role == 'Manager' && project.members.filter(self => self.role === 'Manager').length <= 1) res.redirect(`/project/${data.project._id.toString()}/2`);
