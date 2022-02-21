@@ -1,13 +1,13 @@
 .month {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 0;
 }
 
 .week {
     display: flex;
     flex-direction: row;
-    gap: 10px;
+    gap: 0;
 }
 
 .day {
@@ -15,18 +15,19 @@
     max-width: 14%;
     padding: 1.5em;
     text-align: center;
-    border-radius: 8px;
+    border-radius: 0;
     font-weight: bold;
     cursor: pointer;
-    transition: 0.1s;
     border: 1.5px solid #eee;
 }
-
+.week.head .day {
+    cursor: inherit;
+}
 .today {
     background: rgb(43, 227, 124);
     border: 1.5px solid rgb(43, 227, 124);
 }
 
-.day:not(.today):hover {
-    background: #f0f0f0;
+.day:not(.today):hover, .week.head .day {
+    background: #eee;
 }

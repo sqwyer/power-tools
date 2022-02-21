@@ -22,6 +22,15 @@
             <h2>{{calendar.month}}, {{calendar.year}}</h2>
             <br />
             <div class="month">
+                <div class="week head">
+                    <div class="day">Sunday</div>
+                    <div class="day">Monday</div>
+                    <div class="day">Tuesday</div>
+                    <div class="day">Wednesday</div>
+                    <div class="day">Thursday</div>
+                    <div class="day">Friday</div>
+                    <div class="day">Saturday</div>
+                </div>
                 {{#each calendar.general}}
                 <div class="week">
                     {{#each this}}
