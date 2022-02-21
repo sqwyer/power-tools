@@ -11,7 +11,7 @@ function get (req, res) {
             let tasks = project.tasks.map(self => self.tasks);
             let d = new Date();
 
-            let month = d.getMonth();
+            let month = d.getMonth() + 1;
             let date = d.getDate();
             let year = d.getFullYear();
             let days = new Date(year, month, 0).getDate();
@@ -27,10 +27,10 @@ function get (req, res) {
                 general[iter].push({blank: true});
             }
 
-            for(let i = firstDay+1; i < days; i++) {
+            for(let i = firstDay+1; i < days+firstDay+1; i++) {
 
                 if(general[iter] == undefined) general[iter] = [];
-                general[iter].push({date: i, tasks: tasks.filter(due => due), passed: (i<date), today: (i==date)});
+                general[iter].push({date: i-firstDay, tasks: tasks.filter(due => due), passed: (i-firstDay<date), today: (i-firstDay==date)});
                 if(i%7 == 0) iter++;
                 if(i+1 == days) {
                     let calendar = {
