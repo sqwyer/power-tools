@@ -42,7 +42,8 @@
     cursor: pointer;
     display: flex;
     flex-direction: column;
-    width: 170%;
+    width: 100%;
+    margin: inherit 0;
 }
 
 .tasklist .content .task .section {
