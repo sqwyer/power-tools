@@ -1,4 +1,5 @@
 const { can } = require('../helpers/can');
+const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
 function get (req, res) {
     let path = `${__dirname}/../../views/project/calendar`;
@@ -11,7 +12,9 @@ function get (req, res) {
             let tasks = project.tasks.map(self => self.tasks);
             let d = new Date();
 
-            let month = d.getMonth() + 1;
+            let month = d.getMonth();
+            let monthName = months[month];
+            month++;
             let date = d.getDate();
             let year = d.getFullYear();
             let days = new Date(year, month, 0).getDate();
@@ -34,8 +37,13 @@ function get (req, res) {
                 if(i%7 == 0) iter++;
                 if(i+1 == days) {
                     let calendar = {
-                        month, date, year, days, weeks,
-                        general
+                        month,
+                        date,
+                        year,
+                        days,
+                        weeks,
+                        general,
+                        monthName
                     }
         
                     res.render(path, { project, user, member, role, calendar })
