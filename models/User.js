@@ -13,6 +13,10 @@ const UserSchema = mongoose.Schema({
         type: Array,
         default: []
     },
+    admin: {
+        type: Boolean,
+        default: false
+    },
     password: String
 })
 const UserModel = conn.model('user', UserSchema, 'users')

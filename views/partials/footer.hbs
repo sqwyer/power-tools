@@ -24,16 +24,25 @@
             <a href="#">Login</a>
             {{/isntEmpty}}
         </div>
+        {{#if user.admin}}
+        <div>
+            <h4>Admin</h4>
+            <a href="#">Management</a>
+            <a href="#">Schools</a>
+            <a href="#">Students</a>
+            <a href="#">Projects</a>
+        </div>
+        {{/if}}
         <div>
             <h4>Development</h4>
-            <a href="#">Branding Guide</a>
             <a href="#">Bug Reports</a>
+            <a href="#">Contact</a>
             <a href="#">Source</a>
         </div>
         <div>
             <h4>Project</h4>
             <a href="#">Team Members</a>
-            <a href="#">Project Roadmap</a>
+            <a href="#">Project Information</a>
             <a href="#">Articles</a>
             <a href="#">Deadlines</a>
         </div>
