@@ -1,3 +1,4 @@
+const mongoose = require('mongoose')
 const debug = require('../debug')
 const { can } = require('../helpers/can')
 
@@ -34,15 +35,63 @@ function getOne (req, res) {
 }
 
 function create (req, res) {
+    can(req.user.email, req.params.id, data => {
+        if(data.error) {
+            res.redirect('/');
+            console.error(data.error);
+        } else if(!data.project) res.redirect('/');
+        else if(!data.user) res.redirect('/api/auth/login')
+        else {
+            let { project } = data;
+            let list = project.tasks.find(self => self.id.toString() === req.params.list)
+            if(!list) res.redirect('/project/' + project.id + '/1')
+            else {
+                let i = 0; project.tasks.indexOf(list);
+                let { body, note, due } = req.body;
+                if(!body || !note) {
+                    res.redirect('/project/' + project.id + '/1');
+                } else {
+                    if(!due) due = '';
+                    project.tasks[i].tasks.push({
+                        id: new mongoose.Types.ObjectId(),
+                        body,
+                        note,
+                        due
+                    });
+                    project.markModified('tasks');
+                    project.save(err => {
+                        if(err) debug(err, () => {});
+                        res.redirect('/project/' + project.id + '/1');
+                    });
+                }
+            }
 
+        }
+    }, 'manageTasks');
 }
 
 function remove (req, res) {
+    can(req.user.email, req.params.id, data => {
+        if(data.error) {
 
+        } else if(!data.project) res.redirect('/');
+        else if(!data.user) res.redirect('/api/auth/login')
+        else {
+            
+        }
+    }, 'manageTasks');
 }
 
 function update (req, res) {
+    can(req.user.email, req.params.id, data => {
+        if(data.error) {
 
+        } else if(!data.project) res.redirect('/');
+        else if(!data.user) res.redirect('/api/auth/login')
+        else {
+            
+        }
+    }, 'manageTasks');
 }
 
 module.exports.mod = app => {

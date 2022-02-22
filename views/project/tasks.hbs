@@ -28,14 +28,14 @@
                     <div class="heading">
                         <span>{{name}}</span>
                         <span><a href="#">Edit</a></span>
-                        <span><a href="#">Add</a></span>
+                        <span><a href="#" onclick="createNew(document.getElementById('tasks-{{id}}'))">Add</a></span>
                     </div>
                     <div class="content">
-                        {{#ifEmpty tasks}}
-                        <p>There are no tasks under this category.</p>
-                        {{else}}
-                        <div class="tasks">
-                        {{#each tasks}}
+                        <div class="tasks" id="tasks-{{id}}">
+                            {{#ifEmpty tasks}}
+                            <p>There are no tasks under this category.</p>
+                            {{else}}
+                            {{#each tasks}}
                             <div class="task">
                                 <div class="section">
                                     <h4 class="push-up-small">{{name}}</h4>
@@ -50,8 +50,8 @@
                                 </div>
                             </div>
                         {{/each}}
-                        </div>
                         {{/ifEmpty}}
+                        </div>
                     </div>
                 </div>
             {{/each}}
@@ -61,5 +61,7 @@
         </div>
     </div>
     {{> footer}}
+
+    <script src="/public/js/tasks.js"></script>
 </body>
 </html>
