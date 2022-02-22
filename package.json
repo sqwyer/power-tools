@@ -19,7 +19,7 @@
     "nodemon": "^2.0.15"
   },
   "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": ""
+  "author": "Sawyer Bivens",
+  "license": "MIT",
+  "description": "A platform which makes it easier for students to manage their projects; solo or in a group setting."
 }

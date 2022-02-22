@@ -11,8 +11,11 @@ function get (req, res) {
             let { project, user, member, role } = data;
             let tasks = project.tasks.map(self => self.tasks);
             let d = new Date();
+            let offset = 0;
 
-            if(req.query.offset != undefined && Number(req.query.offset) != NaN) d.setMonth(d.getMonth()+Number(req.query.offset));
+            if(req.query.offset != undefined && Number(req.query.offset) != NaN) offset = Number(req.query.offset)
+
+            d.setMonth(d.getMonth()+offset);
 
             let month = d.getMonth();
             let monthName = months[month];
@@ -35,12 +38,13 @@ function get (req, res) {
             for(let i = firstDay+1; i < days+firstDay+1; i++) {
 
                 if(general[iter] == undefined) general[iter] = [];
-                general[iter].push({date: i-firstDay, tasks: tasks.filter(due => due), passed: (i-firstDay<date), today: (i-firstDay==date)});
+                if(offset != 0 && offset < 0) general[iter].push({date: i-firstDay, tasks: tasks.filter(due => due), passed: true, today: false});
+                else if(offset != 0 && offset > 0) general[iter].push({date: i-firstDay, tasks: tasks.filter(due => due), passed: false, today: false});
+                else general[iter].push({date: i-firstDay, tasks: tasks.filter(due => due), passed: i-firstDay<date, today: i-firstDay==date});
                 if(i%7 == 0) iter++;
                 if(i-firstDay == days) {
                     if(general[iter] != undefined && general[iter].length != 7) {
                         let l = 7-general[iter].length;
-                        console.log(l);
                         for(let k = 0; k < l; k++) {
                             general[iter].push({blank: true});
                         }
