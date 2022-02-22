@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="offset" content="{{calendar.offset}}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
@@ -19,9 +20,13 @@
         {{> sidebar}}
         <div class="col">
             <h1>{{project.name}} Calendar</h1>
-            <h2>{{calendar.monthName}}, {{calendar.year}}</h2>
+            <h2 class="flex">
+                <span class="left" onclick="left()">&lt;</span>
+                <span class="center">{{calendar.monthName}}, {{calendar.year}}</span>
+                <span class="right" onclick="right()">&gt;</span>
+                </h2>
             <br />
-            <div class="month">
+            <div class="month fill">
                 <div class="week head">
                     <div class="day">Sunday</div>
                     <div class="day">Monday</div>
@@ -46,5 +51,26 @@
         </div>
     </div>
     {{> footer}}
+    
+    <script>
+        let offset = document.getElementsByName('offset')[0].getAttribute('content');
+        let num = Number(offset) || 0;
+
+        const update = v => {
+            if ('URLSearchParams' in window) {
+                let searchParams = new URLSearchParams(window.location.search);
+                searchParams.set("offset", v);
+                window.location.search = searchParams.toString();
+            }
+        }
+
+        function left () {
+            update(num-1)
+        }
+
+        function right () {
+            update(num+1)
+        }
+    </script>
 </body>
 </html>

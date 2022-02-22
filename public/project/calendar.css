@@ -12,7 +12,6 @@
 
 .day {
     flex: 1;
-    max-width: 14%;
     padding: 1.5em;
     text-align: center;
     border-radius: 0;
@@ -30,4 +29,21 @@
 
 .day:not(.today):not(.blank):hover, .week.head .day {
     background: #eee;
+}
+
+h2.flex {
+    display: flex;
+    flex-direction: row;
+}
+
+.left {
+    margin-right: auto;
+}
+
+.center {
+    margin: inherit auto;
+}
+
+.right {
+    margin-left: auto;
 }

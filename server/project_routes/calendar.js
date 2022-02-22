@@ -12,6 +12,8 @@ function get (req, res) {
             let tasks = project.tasks.map(self => self.tasks);
             let d = new Date();
 
+            if(req.query.offset != undefined && Number(req.query.offset) != NaN) d.setMonth(d.getMonth()+Number(req.query.offset));
+
             let month = d.getMonth();
             let monthName = months[month];
             month++;
@@ -35,7 +37,15 @@ function get (req, res) {
                 if(general[iter] == undefined) general[iter] = [];
                 general[iter].push({date: i-firstDay, tasks: tasks.filter(due => due), passed: (i-firstDay<date), today: (i-firstDay==date)});
                 if(i%7 == 0) iter++;
-                if(i+1 == days) {
+                if(i-firstDay == days) {
+                    if(general[iter] != undefined && general[iter].length != 7) {
+                        let l = 7-general[iter].length;
+                        console.log(l);
+                        for(let k = 0; k < l; k++) {
+                            general[iter].push({blank: true});
+                        }
+                    }
+
                     let calendar = {
                         month,
                         date,
@@ -43,14 +53,15 @@ function get (req, res) {
                         days,
                         weeks,
                         general,
-                        monthName
+                        monthName,
+                        offset: (req.query.offset && Number(req.query.offset) != NaN) ? Number(req.query.offset) : 0
                     }
         
                     res.render(path, { project, user, member, role, calendar })
                 }
             }
         }
-    })
+    });
 }
 
 module.exports.mod = app => {

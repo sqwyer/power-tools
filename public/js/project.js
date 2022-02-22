@@ -18,7 +18,6 @@ function watch(id) {
     if(form) {
         let inputs = [...form.querySelectorAll('input'), ...form.querySelectorAll('textarea')];
         defaults[id] = inputs.map(s=>s.value);
-        console.log(defaults);
         inputs.forEach(input => input.addEventListener('input', () => _inputWactch(id)));
     }
     else {
