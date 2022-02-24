@@ -35,6 +35,11 @@
     font-weight: bold;
 }
 
+.tasks {
+    width: 100%;
+    margin: inherit 0;
+}
+
 .tasklist .content .task {
     border: 1.5px solid #eee;
     border-radius: 4px;
