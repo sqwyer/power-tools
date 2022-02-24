@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="/public/form.css">
     <link rel="stylesheet" href="/public/project.css">
     <link rel="stylesheet" href="/public/project/tasks.css">
+    <link rel="stylesheet" href="/public/project/task.css">
     <title>Power Tools</title>
 </head>
 <body>
@@ -18,16 +19,40 @@
     <div class="container flex-row">
         {{> sidebar}}
         <div class="col">
-            <a href="/project/{{project.id}}/1">Back To Lists</a>
-            <h1>{{task.name}}</h1>
-            <p>{{task.note}}</p>
-            {{#ifEmpty task.due}}
+            <div class="path">
+                <a href="/project/{{project.id}}">{{project.name}}</a>
+                <a href="/project/{{project.id}}/1">Tasks</a>
+                <a href="/project/{{project.id}}/1">{{list.name}}</a>
+                <a href="#">{{task.name}}</a>
+            </div>
+            <br />
+            <form id="form-1" class="task-general form-no-align">
+                <div class="form-row">
+                    <label class="required">Task Name</label>
+                    <input class="not-empty" value="{{task.name}}" placeholder="{{task.name}}">
+                </div>
+                <div class="form-row">
+                    <label class="required">Task Note</label>
+                    <input class="not-empty" value="{{task.note}}" placeholder="{{task.note}}">
+                </div>
+                <div class="form-row">
+                    <label>Due Date</label>
+                    <input value="{{task.due}}" placeholder="Leave empty for no due date. Enter as 'MM/DD/YYYY'.">
+                </div>
+                <button class="btn primary submit-btn" type="submit" disabled>Submit Changes</button>
+            </form>
+            {{!-- {{#ifEmpty task.due}}
             <a>No due date.</a>
             {{else}}
             <a>Due {{task.due}}.</a>
-            {{/ifEmpty}}
+            {{/ifEmpty}} --}}
         </div>
     </div>
     {{> footer}}
+
+    <script src="/public/js/project.js"></script>
+    <script>
+        watch("form-1");
+    </script>
 </body>
 </html>

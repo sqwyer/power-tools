@@ -1,0 +1,12 @@
+.path a:not(:last-child)::after {
+    content: '/';
+    color: #808080;
+    text-decoration: none!important;
+    margin-left: 0.3em;
+    margin-right: 0.3em;
+    display: inline-block;
+}
+
+.path a {
+    cursor: pointer;
+}

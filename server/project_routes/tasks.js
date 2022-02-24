@@ -28,7 +28,7 @@ function getOne (req, res) {
             else {
                 let task = list.tasks.find(self => self.id.toString() === req.params.task)
                 if(!task) res.redirect('/project/' + project.id)
-                else res.render(path, { project, user, member, role, task })
+                else res.render(path, { project, user, member, role, task, list })
             }
         }
     })
