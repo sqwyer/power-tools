@@ -37,8 +37,8 @@ function getOne (req, res) {
 function create (req, res) {
     can(req.user.email, req.params.id, data => {
         if(data.error) {
-            res.redirect('/');
-            console.error(data.error);
+            if(data.error == 'No permission.') res.redirect(`/project/${req.params.id}/1`);
+            else debug(data.error, () => res.redirect('/'));
         } else if(!data.project) res.redirect('/');
         else if(!data.user) res.redirect('/api/auth/login')
         else {
