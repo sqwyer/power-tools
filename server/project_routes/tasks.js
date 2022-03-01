@@ -79,7 +79,20 @@ function remove (req, res) {
         else if(!data.user) res.redirect('/api/auth/login')
         else {
             let { project } = data;
-            // ...
+            let list = project.tasks.find(s=>s.id==req.params.list);
+            if(!list) res.redirect('/project/' + project.id + '/1');
+            else {
+                let task = list.tasks.find(s=>s.id==req.params.tid);
+                if(!task) res.redirect('/project/' + project.id + '/1');
+                else {
+                    project.tasks[project.tasks.indexOf(list)].splice(list.tasks.indexOf(task),1);
+                    project.markModified('tasks');
+                    project.save(err => {
+                        if(err) debug(err, () => {});
+                        res.redirect('/project/' + project.id + '/1')
+                    })
+                }
+            }
         }
     }, 'manageTasks');
 }
@@ -122,6 +135,6 @@ module.exports.mod = app => {
     app.get('/project/:id/1', auth, getAll)
     app.get('/project/:id/1/:list/:task', auth, getOne)
     app.post('/project/:id/1/create', auth, create)
-    app.post('/project/:id/1/remove', auth, remove)
+    app.post('/project/:id/1/remove/:list/:tid', auth, remove)
     app.post('/project/:id/1/update/:list/:tid', auth, update)
 }
