@@ -43,18 +43,18 @@ function create (req, res) {
         else if(!data.user) res.redirect('/api/auth/login')
         else {
             let { project } = data;
-            let list = project.tasks.find(self => self.id.toString() === req.params.list)
+            let list = project.tasks.find(self => self.id.toString() === req.params.list);
             if(!list) res.redirect('/project/' + project.id + '/1')
             else {
-                let i = 0; project.tasks.indexOf(list);
-                let { body, note, due } = req.body;
-                if(!body || !note) {
+                let i = project.tasks.indexOf(list);
+                let { name, note, due } = req.body;
+                if(!name || !note) {
                     res.redirect('/project/' + project.id + '/1');
                 } else {
                     if(!due) due = '';
                     project.tasks[i].tasks.push({
                         id: new mongoose.Types.ObjectId(),
-                        body,
+                        name,
                         note,
                         due
                     });
@@ -85,7 +85,7 @@ function remove (req, res) {
                 let task = list.tasks.find(s=>s.id==req.params.tid);
                 if(!task) res.redirect('/project/' + project.id + '/1');
                 else {
-                    project.tasks[project.tasks.indexOf(list)].splice(list.tasks.indexOf(task),1);
+                    project.tasks[project.tasks.indexOf(list)].tasks.splice(list.tasks.indexOf(task),1);
                     project.markModified('tasks');
                     project.save(err => {
                         if(err) debug(err, () => {});
@@ -134,7 +134,7 @@ module.exports.mod = app => {
 
     app.get('/project/:id/1', auth, getAll)
     app.get('/project/:id/1/:list/:task', auth, getOne)
-    app.post('/project/:id/1/create', auth, create)
+    app.post('/project/:id/1/create/:list', auth, create)
     app.post('/project/:id/1/remove/:list/:tid', auth, remove)
     app.post('/project/:id/1/update/:list/:tid', auth, update)
 }

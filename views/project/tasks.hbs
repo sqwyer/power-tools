@@ -28,7 +28,7 @@
                     <div class="heading">
                         <span>{{name}}</span>
                         <span><a href="#">Edit</a></span>
-                        <span><a href="#" onclick="createNew(document.getElementById('tasks-{{id}}'))">Add</a></span>
+                        <span><a href="#" onclick="createNew(document.getElementById('tasks-{{id}}'), '{{../project.id}}')">Add</a></span>
                     </div>
                     <div class="content">
                         <div class="tasks" id="tasks-{{id}}">

@@ -8,7 +8,7 @@ module.exports.can = (email, project, next, perm) => {
         else {
             ProjectModel.findById(project).exec((err2, project) => {
                 if(err2) next({error: 'Internal error.'});
-                else if(!user) next({error: 'Project does not exist.'});
+                else if(!project) next({error: 'Project does not exist.'});
                 else {
                     let member = project.members.find(s=>s.id===user._id.toString());
                     if(!member) next({error: 'User is not in project.'});

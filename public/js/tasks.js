@@ -69,15 +69,13 @@ function cancelC(mId) {
     localStorage.setItem('new-tasks', JSON.stringify(list));
 }
 
-function createNew(list, inp1val, inp2val) {
+function createNew(list, pid, inp1val, inp2val) {
     id++;
-
-    console.log(list);
 
     let lid = list.id.split('-')[1];
     let e = document.createElement('form');
 
-    e.action = '/project/' + lid + '/1/create';
+    e.action = '/project/' + pid + '/1/create/' + lid;
     e.method = 'POST';
     e.id = 'create-' + id;
     e.className = 'task no-padding';
