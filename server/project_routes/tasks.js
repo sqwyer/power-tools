@@ -2,6 +2,19 @@ const mongoose = require('mongoose')
 const debug = require('../debug')
 const { can } = require('../helpers/can')
 
+function isValidDate(dateString)
+{
+    if(!/^\d{1,2}\/\d{1,2}\/\d{4}$/.test(dateString)) return false;
+    let parts = dateString.split("/");
+    let day = parseInt(parts[1], 10);
+    let month = parseInt(parts[0], 10);
+    let year = parseInt(parts[2], 10);
+    if(year < 1000 || year > 3000 || month == 0 || month > 12) return false;
+    let monthLength = [ 31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31 ];
+    if(year % 400 == 0 || (year % 100 != 0 && year % 4 == 0)) monthLength[1] = 29;
+    return day > 0 && day <= monthLength[month - 1];
+};
+
 function getAll (req, res) {
     let path = `${__dirname}/../../views/project/tasks`
     can(req.user.email, req.params.id, (data) => {
@@ -112,17 +125,21 @@ function update (req, res) {
                 let task = list.tasks.find(s=>s.id==req.params.tid);
                 if(!task) res.redirect('/project/' + project.id + '/1');
                 else {
+                    let er = "";
                     if(Object.keys(req.body).length > 0) {
                         for(let k in req.body) {
-                            if(k == 'due') project.tasks[project.tasks.indexOf(list)].tasks[list.tasks.indexOf(task)][k] = req.body[k];
+                            if(k == 'due') {
+                                if(isValidDate(req.body[k])) project.tasks[project.tasks.indexOf(list)].tasks[list.tasks.indexOf(task)][k] = req.body[k];
+                                else er = "?err=Invalid date.";
+                            }
                             else if(req.body[k] != '') project.tasks[project.tasks.indexOf(list)].tasks[list.tasks.indexOf(task)][k] = req.body[k];
                         }
                         project.markModified('tasks');
                         project.save(err => {
                             if(err) debug(err, () => {});
-                            res.redirect('/project/' + project.id + '/1/' + req.params.list + '/' + req.params.tid);
+                            res.redirect('/project/' + project.id + '/1/' + req.params.list + '/' + req.params.tid + er);
                         })
-                    } else res.redirect('/project/' + project.id + '/1/' + req.params.list + '/' + req.params.tid);
+                    } else res.redirect('/project/' + project.id + '/1/' + req.params.list + '/' + req.params.tid + er);
                 }
             }
         }
@@ -138,3 +155,5 @@ module.exports.mod = app => {
     app.post('/project/:id/1/remove/:list/:tid', auth, remove)
     app.post('/project/:id/1/update/:list/:tid', auth, update)
 }
+
+module.exports.isValidDate = isValidDate;
