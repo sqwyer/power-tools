@@ -1,5 +1,5 @@
 .flex-row {
-    display: flex;
+    display: flex!important;
     flex-direction: row;
     gap: 20px;
 }
@@ -14,7 +14,6 @@
 
 form.col {
     flex-basis: 100%;
-    width: 50%;
 }
 
 .col:not(textarea.col) {
