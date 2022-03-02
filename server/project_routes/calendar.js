@@ -36,9 +36,9 @@ function get (req, res) {
             }
 
             for(let i = firstDay+1; i < days+firstDay+1; i++) {
-
+                console.log(`${month}/${i-firstDay}/${year}`)
                 if(general[iter] == undefined) general[iter] = [];
-                if(offset != 0 && offset < 0) general[iter].push({date: i-firstDay, tasks: tasks.filter(due => due), passed: true, today: false});
+                if(offset != 0 && offset < 0) general[iter].push({date: i-firstDay, tasks: tasks.filter(due => due == `${month}/${i-firstDay}/${year}`), passed: true, today: false});
                 else if(offset != 0 && offset > 0) general[iter].push({date: i-firstDay, tasks: tasks.filter(due => due), passed: false, today: false});
                 else general[iter].push({date: i-firstDay, tasks: tasks.filter(due => due), passed: i-firstDay<date, today: i-firstDay==date});
                 if(i%7 == 0) iter++;
@@ -60,6 +60,8 @@ function get (req, res) {
                         monthName,
                         offset: (req.query.offset && Number(req.query.offset) != NaN) ? Number(req.query.offset) : 0
                     }
+
+                    console.log(calendar.general[2][2].tasks);
         
                     res.render(path, { project, user, member, role, calendar })
                 }

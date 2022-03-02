@@ -27,8 +27,26 @@
     border: 1.5px solid rgb(43, 227, 124);
 }
 
-.day:not(.today):not(.blank):hover, .week.head .day {
+.week.head .day {
+    background: #FF5733!important;
+    border: 1.5px solid #FF5733;
+}
+
+.day.today, .day:not(.blank):hover {
     background: #eee;
+}
+
+.day.today {
+    border: 1.5px solid #ddd;
+    background: #eee;
+}
+
+.day p {
+    text-align: left;
+}
+
+.day p:not(:first-child) {
+    font-weight: 500;
 }
 
 h2.flex {
