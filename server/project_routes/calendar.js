@@ -82,3 +82,5 @@ function get (req, res) {
 module.exports.mod = app => {
     app.get('/project/:id/5', require('../ensureAuth'), get);
 }
+
+module.exports.formatNum = formatNum;
