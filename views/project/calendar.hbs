@@ -43,10 +43,19 @@
                     <div class="day {{#if passed}}passed{{/if}} blank"></div>
                     {{else}}
                     <div class="day {{#if passed}}passed{{/if}} {{#if today}}today{{/if}}">
-                        <p>{{date}}</p>
-                        {{#each tasks}}
-                            <p>{{this}}</p>
-                        {{/each}}
+                        <p>{{fDate}}</p>
+                        {{#isntEmpty tasks}}
+                        <a class="to-task">1) {{tasks.[0].name}}</a>
+                        {{#if (math tasks.length ">" 1)}}
+                        <a href="">View More</a>
+                        {{/if}}
+                        <a href="" class="view-more">(See More)</a>
+                        {{!-- {{#each tasks}}
+                            <p>{{math @index "+" 1}}) {{this.name}}</p>
+                        {{/each}} --}}
+                        {{else}}
+                            <p>No due tasks.</p>
+                        {{/isntEmpty}}
                     </div>
                     {{/if}}
                     {{/each}}

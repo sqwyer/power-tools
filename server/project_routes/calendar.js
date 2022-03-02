@@ -1,6 +1,16 @@
 const { can } = require('../helpers/can');
 const months = ["January","February","March","April","May","June","July","August","September","October","November","December"];
 
+function formatNum(x) {
+    let last = x % 10;
+    if(x < 10 || x > 20) {
+        if(last == 1) return `${x}st`;
+        else if(last == 2) return `${x}nd`;
+        else if(last == 3) return `${x}rd`;
+        else return `${x}th`;
+    } else return `${x}th`;
+}
+
 function get (req, res) {
     let path = `${__dirname}/../../views/project/calendar`;
     can(req.user.email, req.params.id, (data) => {
@@ -9,7 +19,10 @@ function get (req, res) {
         else if(!data.user) res.redirect('/')
         else {
             let { project, user, member, role } = data;
-            let tasks = project.tasks.map(self => self.tasks);
+            let tasks = [];
+            for(let i = 0; i < project.tasks.length; i++) {
+                tasks.push(...project.tasks[i].tasks);
+            }
             let d = new Date();
             let offset = 0;
 
@@ -36,36 +49,32 @@ function get (req, res) {
             }
 
             for(let i = firstDay+1; i < days+firstDay+1; i++) {
-                console.log(`${month}/${i-firstDay}/${year}`)
                 if(general[iter] == undefined) general[iter] = [];
-                if(offset != 0 && offset < 0) general[iter].push({date: i-firstDay, tasks: tasks.filter(due => due == `${month}/${i-firstDay}/${year}`), passed: true, today: false});
-                else if(offset != 0 && offset > 0) general[iter].push({date: i-firstDay, tasks: tasks.filter(due => due), passed: false, today: false});
-                else general[iter].push({date: i-firstDay, tasks: tasks.filter(due => due), passed: i-firstDay<date, today: i-firstDay==date});
+                if(offset != 0 && offset < 0) general[iter].push({date: i-firstDay, fDate: formatNum(i-firstDay), tasks: tasks.filter(self => self.due === `${month}/${i-firstDay}/${year}`), passed: true, today: false});
+                else if(offset != 0 && offset > 0) general[iter].push({date: i-firstDay, fDate: formatNum(i-firstDay), tasks: tasks.filter(self => self.due === `${month}/${i-firstDay}/${year}`), passed: false, today: false});
+                else general[iter].push({date: i-firstDay, fDate: formatNum(i-firstDay), tasks: tasks.filter(self => self.due === `${month}/${i-firstDay}/${year}`), passed: i-firstDay<date, today: i-firstDay==date});
                 if(i%7 == 0) iter++;
-                if(i-firstDay == days) {
-                    if(general[iter] != undefined && general[iter].length != 7) {
-                        let l = 7-general[iter].length;
-                        for(let k = 0; k < l; k++) {
-                            general[iter].push({blank: true});
-                        }
-                    }
+            }
 
-                    let calendar = {
-                        month,
-                        date,
-                        year,
-                        days,
-                        weeks,
-                        general,
-                        monthName,
-                        offset: (req.query.offset && Number(req.query.offset) != NaN) ? Number(req.query.offset) : 0
-                    }
-
-                    console.log(calendar.general[2][2].tasks);
-        
-                    res.render(path, { project, user, member, role, calendar })
+            if(general[iter] != undefined && general[iter].length != 7) {
+                let l = 7-general[iter].length;
+                for(let k = 0; k < l; k++) {
+                    general[iter].push({blank: true});
                 }
             }
+
+            let calendar = {
+                month,
+                date,
+                year,
+                days,
+                weeks,
+                general,
+                monthName,
+                offset: (req.query.offset && Number(req.query.offset) != NaN) ? Number(req.query.offset) : 0
+            }
+
+            res.render(path, { project, user, member, role, calendar })
         }
     });
 }

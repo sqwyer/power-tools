@@ -16,15 +16,8 @@
     text-align: center;
     border-radius: 0;
     font-weight: bold;
-    cursor: pointer;
-    border: 1.5px solid #eee;
-}
-.week.head .day, .week .day.blank {
-    cursor: inherit;
-}
-.today {
-    background: rgb(43, 227, 124);
-    border: 1.5px solid rgb(43, 227, 124);
+    /* cursor: pointer; */
+    border: 1.5px solid #ddd;
 }
 
 .week.head .day {
@@ -33,11 +26,11 @@
 }
 
 .day.today, .day:not(.blank):hover {
-    background: #eee;
+    background: #f8f8f8;
 }
 
 .day.today {
-    border: 1.5px solid #ddd;
+    /* border: 1.5px solid #ddd; */
     background: #eee;
 }
 
@@ -64,4 +57,29 @@ h2.flex {
 
 .right {
     margin-left: auto;
+}
+
+.view-more, .to-task {
+    display: block;
+    text-align: left;
+    text-decoration: none;
+}
+
+.view-more {
+    color: #222;
+    font-size: 70%;
+    margin-top: 5px;
+}
+
+.view-more, .to-task {
+    cursor: pointer;
+    transition: 0.1s;
+}
+
+.to-task {
+    color: #000;
+}
+
+.view-more:hover, .to-task:hover {
+    text-decoration: underline;
 }
