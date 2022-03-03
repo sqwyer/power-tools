@@ -45,14 +45,8 @@
                     <div class="day {{#if passed}}passed{{/if}} {{#if today}}today{{/if}}">
                         <p>{{fDate}}</p>
                         {{#isntEmpty tasks}}
-                        <a class="to-task">1) {{tasks.[0].name}}</a>
-                        {{#if (math tasks.length ">" 1)}}
-                        <a href="">View More</a>
-                        {{/if}}
-                        <a href="" class="view-more">(See More)</a>
-                        {{!-- {{#each tasks}}
-                            <p>{{math @index "+" 1}}) {{this.name}}</p>
-                        {{/each}} --}}
+                        <a class="to-task" href="/project/{{@root/project.id}}/1/{{tasks.[0].parent}}/{{tasks.[0].id}}">1) {{tasks.[0].name}}</a>
+                        <a href="/project/{{@root/project.id}}/5/spec?m={{@root/calendar.month}}&d={{date}}&y={{@root/calendar.year}}" class="view-more">(See All)</a>
                         {{else}}
                             <p>No due tasks.</p>
                         {{/isntEmpty}}

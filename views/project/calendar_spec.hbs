@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="offset" content="{{calendar.offset}}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/public/globals.css">
+    <link rel="stylesheet" href="/public/form.css">
+    <link rel="stylesheet" href="/public/project.css">
+    <link rel="stylesheet" href="/public/project/calendar.css">
+    <link rel="stylesheet" href="/public/project/calendar_spec.css">
+    <title>Power Tools</title>
+</head>
+<body>
+    {{>nav}}
+    <div class="container flex-row">
+        {{> sidebar}}
+        <div class="col">
+            <h1>{{project.name}} Calendar ({{m}}/{{d}}/{{y}})</h1>
+            {{#isntEmpty tasks}}
+            {{#if (math tasks.length "=" 1)}}
+            <p>There is {{tasks.length}} task due.</p>
+            {{else}}
+            <p>There are {{tasks.length}} tasks due.</p>
+            {{/if}}
+            <div class="spec-tasks">
+            {{#each tasks}}
+            <div class="spec-task">
+                <div class="sect">
+                    <p class="bold">{{name}}</p>
+                    <p>{{note}}</p>
+                </div>
+                <div class="sect">
+                    <a href="/project/{{@root/project.id}}/1/{{parent}}/{{id}}">View Task</a>
+                </div>
+            </div>
+            {{/each}}
+            </div>
+            {{else}}
+            <p>There are no tasks due today.</p>
+            {{/isntEmpty}}
+        </div>
+    </div>
+    {{> footer}}
+    
+    <script>
+        let offset = document.getElementsByName('offset')[0].getAttribute('content');
+        let num = Number(offset) || 0;
+
+        const update = v => {
+            if ('URLSearchParams' in window) {
+                let searchParams = new URLSearchParams(window.location.search);
+                searchParams.set("offset", v);
+                window.location.search = searchParams.toString();
+            }
+        }
+
+        function left () {
+            update(num-1)
+        }
+
+        function right () {
+            update(num+1)
+        }
+    </script>
+</body>
+</html>

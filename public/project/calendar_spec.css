@@ -1,0 +1,33 @@
+.spec-tasks {
+    display: flex!important;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 1em;
+}
+
+.spec-task {
+    flex-basis: 24.4%;
+    border: 1.5px solid #eee;
+    border-radius: 4px;
+}
+
+.spec-task label {
+    font-weight: bold;
+}
+
+.spec-task .sect {
+    padding: 1em;
+}
+
+.spec-task .sect:not(:first-child) {
+    border-top: 1.5px solid #eee;
+}
+
+/* .spec-task .sect:hover {
+    background: #fbfbfb;
+} */
+
+.bold {
+    font-weight: bold;
+}

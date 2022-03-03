@@ -21,6 +21,7 @@ function get (req, res) {
             let { project, user, member, role } = data;
             let tasks = [];
             for(let i = 0; i < project.tasks.length; i++) {
+                project.tasks[i].tasks.map(self=>self.parent=project.tasks[i].id);
                 tasks.push(...project.tasks[i].tasks);
             }
             let d = new Date();
@@ -79,8 +80,39 @@ function get (req, res) {
     });
 }
 
+function getSpecificDate(req, res) {
+    can(req.user.email, req.params.id, data => {
+        if(data.error) debug(res.error, () => res.redirect('/'));
+        else {
+            let { project, user, member, role } = data;
+            let { m, d, y } = req.query;
+            if(!m || !d || !y)  res.redirect('/project/' + req.params.id + '/5');
+            else {
+                let resTasks = [];
+                let tasks = [];
+                for(let i = 0; i < project.tasks.length; i++) {
+                    project.tasks[i].tasks.map(self=>self.parent=project.tasks[i].id);
+                    tasks.push(...project.tasks[i].tasks);
+                }
+                resTasks = tasks.filter(self => self.due === `${m}/${d}/${y}`) || [];
+                res.render(`${__dirname}/../../views/project/calendar_spec`, {
+                    tasks: resTasks,
+                    project,
+                    user,
+                    member,
+                    role,
+                    m,
+                    d,
+                    y
+                });
+            }
+        }
+    })
+}
+
 module.exports.mod = app => {
     app.get('/project/:id/5', require('../ensureAuth'), get);
+    app.get('/project/:id/5/spec', require('../ensureAuth'), getSpecificDate)
 }
 
 module.exports.formatNum = formatNum;
