@@ -5,9 +5,15 @@ const session = require('express-session');
 const passport = require('passport');
 const app = express()
 
-const hbs = require('hbs')
+const hbs = require('hbs');
+const { can } = require('./server/helpers/can');
 
 hbs.registerPartials(__dirname + '/views/partials/');
+
+hbs.registerHelper("hasPerm", function(role, perm, options) {
+    if(role.permissions.includes(perm) || role.permissions.includes('admin')) return options.fn(this);
+    else return options.inverse(this);
+});
 
 hbs.registerHelper("math", function(lvalue, operator, rvalue, options) {
     lvalue = parseFloat(lvalue);
