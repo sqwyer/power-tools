@@ -46,26 +46,5 @@
         </div>
     </div>
     {{> footer}}
-    
-    <script>
-        let offset = document.getElementsByName('offset')[0].getAttribute('content');
-        let num = Number(offset) || 0;
-
-        const update = v => {
-            if ('URLSearchParams' in window) {
-                let searchParams = new URLSearchParams(window.location.search);
-                searchParams.set("offset", v);
-                window.location.search = searchParams.toString();
-            }
-        }
-
-        function left () {
-            update(num-1)
-        }
-
-        function right () {
-            update(num+1)
-        }
-    </script>
 </body>
 </html>
