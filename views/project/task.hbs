@@ -29,17 +29,19 @@
             <form id="form-1" class="task-general form-no-align" action="/project/{{project.id}}/1/update/{{list.id}}/{{task.id}}" method="post">
                 <div class="form-row">
                     <label class="required">Task Name</label>
-                    <input name="name" class="not-empty" value="{{task.name}}" placeholder="{{task.name}}">
+                    <input name="name" class="not-empty" value="{{task.name}}" placeholder="{{task.name}}" {{#hasntPerm role "manageTasks"}}disabled{{/hasntPerm}}>
                 </div>
                 <div class="form-row">
                     <label class="required">Task Note</label>
-                    <input name="note" class="not-empty" value="{{task.note}}" placeholder="{{task.note}}">
+                    <input name="note" class="not-empty" value="{{task.note}}" placeholder="{{task.note}}" {{#hasntPerm role "manageTasks"}}disabled{{/hasntPerm}}>
                 </div>
                 <div class="form-row">
                     <label>Due Date</label>
-                    <input name="due" value="{{task.due}}" placeholder="Leave empty for no due date. Enter as 'MM/DD/YYYY'.">
+                    <input name="due" value="{{task.due}}" placeholder="Leave empty for no due date. Enter as 'MM/DD/YYYY'." {{#hasntPerm role "manageTasks"}}disabled{{/hasntPerm}}>
                 </div>
+                {{#hasPerm role "manageTasks"}}
                 <button class="btn primary submit-btn" type="submit" disabled>Submit Changes</button>
+                {{/hasPerm}}
             </form>
             <br />
             {{#hasPerm role "manageTasks"}}

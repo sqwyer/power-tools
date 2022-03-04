@@ -21,8 +21,8 @@
 }
 
 .week.head .day {
-    background: #FF5733!important;
-    border: 1.5px solid #FF5733;
+    background: rgb(19,112,243)!important;
+    border: 1.5px solid rgb(19,112,243);
 }
 
 .day.today, .day:not(.blank):hover {

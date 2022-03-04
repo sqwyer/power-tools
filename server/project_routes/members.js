@@ -13,7 +13,7 @@ function get (req, res) {
                     if(err) debug(err, ()=>{});
                     else if(!data) debug(err, () => {});
                     else {
-                        members.push({...project.members[i], name: data.name, id: data._id.toString()});
+                        members.push({...project.members[i], name: data.name, id: data._id.toString(), email: data.email});
                         if(i+1==project.members.length) {
                             let invites = [];
                             if(project.invites.length >= 1) {

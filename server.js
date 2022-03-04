@@ -15,6 +15,11 @@ hbs.registerHelper("hasPerm", function(role, perm, options) {
     else return options.inverse(this);
 });
 
+hbs.registerHelper("hasntPerm", function(role, perm, options) {
+    if(!role.permissions.includes(perm) && !role.permissions.includes('admin')) return options.fn(this);
+    else return options.inverse(this);
+});
+
 hbs.registerHelper("math", function(lvalue, operator, rvalue, options) {
     lvalue = parseFloat(lvalue);
     rvalue = parseFloat(rvalue);
