@@ -16,9 +16,9 @@
     <div class="container">
         <h2 class="push-up-small">My Projects ({{projects.length}}) <a href="/project/new">(Create New Project)</a></h2>
         {{#isntEmpty projects}}
-        <div class="row gapped">
+        <div class="row gapped as-x no-wrap">
             {{#each projects}}
-            <div class="col shortened">
+            <div class="col shortened custom-scroll">
                 <h4 class="push-up-small">{{name}}</h4>
                 <p class="push-up-small">{{description}}</p>
                 <button class="btn primary block" onclick="window.open('/project/{{_id}}', '_self')">Manage</button>
@@ -33,7 +33,7 @@
     <div class="container">
         <h2 class="push-up-small">Invites</h2>
         {{#isntEmpty invites}}
-        <div class="row gapped">
+        <div class="row gapped custom-scroll as-x">
             {{#each invites}}
             <div class="col shortened">
                 <h4 class="push-up-small">{{name}}</h4>

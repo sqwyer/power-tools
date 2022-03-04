@@ -8,3 +8,21 @@ h2 a {
     font-size: 50%;
     margin-left: 1em;
 }
+
+/* .col.shortened {
+    width: 24.4vw!important;
+    flex: initial
+} */
+
+.col.shortened {
+    /* flex-basis: 100%;
+    flex: initial;
+    width: 100%; */
+    max-width: 20vw!important;
+    min-width: 20vw!important;
+    /* width: 20vw!important; */
+}
+
+.as-x {
+    padding-bottom: 10px;
+}

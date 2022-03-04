@@ -420,3 +420,19 @@ hr.no-top {
     background: #00000020;
     cursor: pointer;
 }
+
+.as-y {
+    overflow-y: auto;
+}
+
+.as-x {
+    overflow-x: auto;
+}
+
+.no-wrap {
+    flex-wrap: nowrap;
+}
+
+.as-x.xp {
+    padding-bottom: 10px;
+}
