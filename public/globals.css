@@ -21,6 +21,10 @@ a {
     min-height: 100vh;
 }
 
+body > .flex-row {
+    gap: 30px;
+}
+
 .container {
     padding: 2em 6em;
 }
@@ -118,9 +122,9 @@ a {
     margin-bottom: 1em;
 }
 
-.col.shortened {
+/* .col.shortened {
     max-width: 23.5vw;
-}
+} */
 
 .block {
     display: block;
@@ -328,9 +332,9 @@ hr.no-top {
 
 @media only screen and (max-width: 1000px) {
 
-    .col {
+    /* .col {
         max-width: 50vw;
-    }
+    } */
 
     .nav .links *:not(.important) { display: none }
     footer .btn { display: initial; }
@@ -350,4 +354,69 @@ hr.no-top {
         margin: inherit 0;
         justify-content: left;
     }
+}
+
+@media only screen and (max-width: 900px) {
+    body > .flex-row {
+        gap: 10px;
+        flex-direction: column!important;
+    }
+    #sidebar {
+        flex-direction: row;
+        width: 100%;
+        overflow-x: scroll;
+    }
+    #sidebar .sb-btn {
+        flex: 1;
+        border-bottom: none;
+    }
+
+    #sidebar .sb-btn:not(:last-child) {
+        border-right: 1.5px solid #eee;
+    }
+    body > .flex-row > .col {
+        flex: 1!important;
+        margin: 0!important;
+        flex-basis: 100%!important;
+        width: 100%!important;
+    }
+    .col {
+        max-width: initial;
+    }
+
+    .container {
+        padding: 1em 3em!important;
+    }
+
+    footer .footer-row div {
+        padding: 0.5em 0;
+    }
+
+    .nav {
+        padding: 2em 3em;
+    }
+
+
+}
+
+.custom-scroll::-webkit-scrollbar, ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+/* .custom-scroll.sides {
+    height: 10px!important;
+} */
+.custom-scroll::-webkit-scrollbar-track, ::-webkit-scrollbar-track {
+    background: #f1f1f1; 
+    border-radius: 12px;
+}
+.custom-scroll::-webkit-scrollbar-thumb, ::-webkit-scrollbar-thumb {
+    background: #00000010; 
+    border-radius: 12px;
+    cursor: pointer;
+}
+  
+.custom-scroll::-webkit-scrollbar-thumb:hover, ::-webkit-scrollbar-thumb:hover {
+    background: #00000020;
+    cursor: pointer;
 }

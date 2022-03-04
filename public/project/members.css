@@ -16,9 +16,17 @@
     margin-left: auto;
 }
 
+b.star {
+    margin-right: 10px;
+}
+
 span.name {
     font-weight: bold;
     font-size: 120%;
+}
+
+span.email {
+    margin-right: 1em;
 }
 
 .invite {
@@ -45,4 +53,42 @@ span.name {
 
 .star {
     color: gold;
+}
+
+@media only screen and (max-width: 900px) {
+    .member, .invite {
+        overflow-y: auto;
+        font-size: 90%;
+    }
+    .member span, .invite span {
+        flex-basis: inherit;
+        flex: 1;
+        width: fit-content;
+    }
+
+    span.email {
+        margin-right: 0;
+    }
+
+    span.name {
+        font-size: 100%;
+    }
+
+    .member span:not(:first-child), .invite span:not(:first-child) {
+        margin-left: 2vw;
+        margin-right: 5vw;
+    }
+
+    .member span:not(.star) {
+        min-width: 22vw;
+    }
+
+    .member span:last-child, .invite span:last-child {
+        margin-left: auto!important;
+        margin-right: 0;
+    }
+
+    span .btn {
+        width: 100%;
+    }
 }

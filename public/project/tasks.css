@@ -7,7 +7,7 @@
 
 .tasklist {
     flex: 1;
-    max-width: 33.3vw;
+    /* max-width: 33.3vw; */
     border: 1.5px solid #eee;
     border-radius: 4px;
 }

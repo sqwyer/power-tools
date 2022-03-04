@@ -50,22 +50,22 @@ form:not(.form-exclude) .required::after {
 }
 
 @media only screen and (max-width: 1300px) {
-    form:not(.form-exclude) {
+    form.auth {
         width: 50vw
     }
 }
 @media only screen and (max-width: 1000px) {
-    form:not(.form-exclude) {
+    form.auth {
         width: 60vw
     }
 }
 @media only screen and (max-width: 800px) {
-    form:not(.form-exclude) {
+    form.auth {
         width: 70vw
     }
 }
 @media only screen and (max-width: 500px) {
-    form:not(.form-exclude) {
+    form.auth {
         width: 90vw
     }
 }

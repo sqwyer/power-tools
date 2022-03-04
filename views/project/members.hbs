@@ -24,11 +24,16 @@
             <div class="members">
                 {{#each members}}
                 <div class="member">
-                    {{#ifEquals ../user.id id}}
+                    {{!-- {{#ifEquals ../user.id id}}
                     <span class="star">✰</span>
-                    {{/ifEquals}}
-                    <span class="name">{{name}}</span>
-                    <span class="light">{{email}}</span>
+                    {{/ifEquals}} --}}
+                    <span class="name">
+                        {{#ifEquals ../user.id id}}
+                        <b class="star">✰ </b>
+                        {{/ifEquals}}
+                        {{name}}
+                    </span>
+                    <span class="light email">{{email}}</span>
                     <span class="right">
                         <form {{#hasPerm @root/role "manageMembers"}} action="/project/{{../project.id}}/2/updateRole/{{id}}" id="update-{{../project.id}}-{{id}}" method="POST" {{/hasPerm}} class="form-exclude">
                             <select name="role" class="minimal" onchange="updateUserRole('{{id}}', '{{../project.id}}')" {{#hasntPerm @root/role "manageMembers"}} disabled {{/hasntPerm}}>
@@ -70,7 +75,7 @@
                 {{#each invites}}
                 <div class="member">
                     <span class="name">{{name}}</span>
-                    <span class="light">{{email}}</span>
+                    <span class="light email">{{email}}</span>
                     <span class="right">
                         <form action="/project/{{../project.id}}/2/invite/cancel" method="POST" class="form-exclude">
                             <input class="hidden" name="member" value="{{id}}">
