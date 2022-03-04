@@ -27,8 +27,10 @@
                 <div class="tasklist">
                     <div class="heading">
                         <span>{{name}}</span>
+                        {{#hasPerm @root/role "managteTasks"}}
                         <span><a href="#">Edit</a></span>
                         <span><a href="#" onclick="createNew(document.getElementById('tasks-{{id}}'), '{{../project.id}}')">Add</a></span>
+                        {{/hasPerm}}
                     </div>
                     <div class="content">
                         <div class="tasks" id="tasks-{{id}}">
@@ -36,16 +38,16 @@
                             <p>There are no tasks under this category.</p>
                             {{else}}
                             {{#each tasks}}
-                            <div class="task">
+                            <div class="task" onclick="window.open('/project/{{@root/project.id}}/1/{{../id}}/{{id}}', '_self')">
                                 <div class="section">
                                     <h4 class="push-up-small">{{name}}</h4>
                                     <p>{{note}}</p>
                                 </div>
                                 <div class="section">
                                     {{#ifEmpty due}}
-                                    <a href="/project/{{@root/project.id}}/1/{{../id}}/{{id}}">No due date.</a>
+                                    <a href="#">No due date.</a>
                                     {{else}}
-                                    <a href="/project/{{@root/project.id}}/1/{{../id}}/{{id}}">Due {{due}}.</a>
+                                    <a href="#">Due {{due}}.</a>
                                     {{/ifEmpty}}
                                 </div>
                             </div>

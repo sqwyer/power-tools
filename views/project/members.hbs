@@ -30,8 +30,8 @@
                     <span class="name">{{name}}</span>
                     <span class="light">{{email}}</span>
                     <span class="right">
-                        <form action="/project/{{../project.id}}/2/updateRole/{{id}}" id="update-{{../project.id}}-{{id}}" method="POST" class="form-exclude">
-                            <select name="role" class="minimal" onchange="updateUserRole('{{id}}', '{{../project.id}}')">
+                        <form {{#hasPerm @root/role "manageMembers"}} action="/project/{{../project.id}}/2/updateRole/{{id}}" id="update-{{../project.id}}-{{id}}" method="POST" {{/hasPerm}} class="form-exclude">
+                            <select name="role" class="minimal" onchange="updateUserRole('{{id}}', '{{../project.id}}')" {{#hasntPerm @root/role "manageMembers"}} disabled {{/hasntPerm}}>
                                 {{#each ../project.roles}}
                                 <option {{#ifEquals this.name ../role}}selected{{/ifEquals}} value="{{this.name}}">{{this.name}}</option>
                                 {{/each}}
@@ -48,6 +48,8 @@
                 </div>
                 {{/each}}
             </div>
+
+            {{#hasPerm role "manageMembers"}}
 
             <hr class="no-top">
 
@@ -85,6 +87,7 @@
             <p class="light">There are no outgoing invites.</p>
 
             {{/isntEmpty}}
+            {{/hasPerm}}
         </div>
     </div>
     {{> footer}}

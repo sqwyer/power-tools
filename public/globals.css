@@ -194,6 +194,30 @@ a {
     flex: 1;
 }
 
+.sb-btn {
+    padding: 1.5em;
+    color: #000;
+    font-weight: 500;
+    text-decoration: none;
+    margin-top: 0!important;
+}
+
+.sb-btn:hover {
+    background: #fdfdfd;
+}
+
+.sb-btn.active {
+    color: rgb(19,112,243);
+}
+
+.sb-btn:not(:last-child) {
+    border-bottom: 1.5px solid #eee;
+}
+
+#sidebar {
+    gap: 0!important;
+}
+
 footer {
     display: flex;
     margin-top: auto;
