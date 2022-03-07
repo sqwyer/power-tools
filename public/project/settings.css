@@ -1,0 +1,14 @@
+.archive-row {
+    display: flex!important;
+    flex-direction: row;
+    gap: 20px;
+}
+
+.archive-row button {
+    margin-top: 0!important;
+    flex-basis: 20%;
+}
+
+.archive-row input {
+    flex: 1;
+}

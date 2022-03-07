@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="/public/globals.css">
     <link rel="stylesheet" href="/public/form.css">
     <link rel="stylesheet" href="/public/project.css">
+    <link rel="stylesheet" href="/public/project/settings.css">
     <title>Power Tools</title>
 </head>
 <body>
@@ -19,7 +20,7 @@
         <div class="col">
             <h1>{{project.name}} Settings</h1>
             <hr>
-            <form id="form-1" class="task-general form-no-align" action="/project/{{project.id}}/action/update?redirect=/project/{{project.id}}/4" method="post">
+            <form id="form-1" class="form-no-align" {{#hasPerm role "manageProject"}}action="/project/{{project.id}}/action/update?redirect=/project/{{project.id}}/4" method="post"{{/hasPerm}}>
                 <div class="form-row">
                     <label class="required">Project Name</label>
                     <input name="name" class="not-empty" value="{{project.name}}" placeholder="{{project.name}}" {{#hasntPerm role "manageProject"}}disabled{{/hasntPerm}}>
@@ -32,11 +33,23 @@
                 <button class="btn primary submit-btn" type="submit" disabled>Submit Changes</button>
                 {{/hasPerm}}
             </form>
+            {{#hasPerm role "admin"}}
+            <hr>
+            <form id="form-2" class="form-no-align" action="/project/{{project.id}}/action/" method="post">
+                <h2>Archive Project</h2>
+                <p>Make the project uneditable, the project will still be visibile but cannot be modified.</p>
+                <div class="archive-row">
+                    <input name="name" class="not-empty" placeholder="{{project.name}}">
+                    <button class="btn danger" disabled>Archive</button>
+                </div>
+            </form>
+            {{/hasPerm}}
         </div>
     </div>
     {{> footer}}
 
     <script src="/public/js/project.js"></script>
+    <script src="/public/js/settings.js"></script>
     <script>
         watch("form-1");
     </script>
