@@ -24,8 +24,8 @@ function getProjectPage (req, res) {
     can(req.user.email, req.params.id, info => {
         if(info.error) debug(info.error, () => res.redirect('/dashboard'));
         else {
-            let { user, project } = info;
-            res.render(`${__dirname}/../../views/project`, {user, project});
+            let { user, project, member, role } = info;
+            res.render(`${__dirname}/../../views/project`, {user, project, member, role});
         }
     });
 }

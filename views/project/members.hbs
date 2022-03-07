@@ -48,7 +48,7 @@
                         {{#ifEquals ../user.id id}}
                         <button class="btn danger">Leave</button>
                         {{else}}
-                        <button class="btn danger">Remove</button>
+                        <button class="btn danger" {{#hasntPerm @root/role "removeMembers"}}disabled{{/hasntPerm}}>Remove</button>
                         {{/ifEquals}}
                     </span>
                 </div>

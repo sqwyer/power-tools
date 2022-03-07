@@ -24,6 +24,10 @@ form.col {
     border: none!important;
 }
 
+.col.rd {
+    flex-direction: row!important;
+}
+
 textarea.col {
     padding: 1em;
     margin: 0!important;

@@ -20,16 +20,18 @@
             <h1>{{project.name}}</h1>
             <hr>
             {{!-- <p class="push-up">{{project.description}}</p> --}}
-            <form class="no-padding form-no-align" id="form-1" action="/project/{{project.id}}/action/update" method="POST">
+            <form class="no-padding form-no-align" id="form-1" {{#hasPerm role "manageProject"}}action="/project/{{project.id}}/action/update" method="POST"{{/hasPerm}}>
                 <div class="flex-row no-padding">
-                    <label class="col">Problem</label>
-                    <label class="col">Solution</label>
+                    <label class="col required rd">Problem</label>
+                    <label class="col required rd">Solution</label>
                 </div>
                 <div class="flex-row no-padding">
-                    <textarea class="col" name="problem" type="text">{{project.problem}}</textarea>
-                    <textarea class="col" name="solution" type="text">{{project.solution}}</textarea>
+                    <textarea class="col" name="problem" type="text" {{#hasntPerm role "manageProject"}}disabled{{/hasntPerm}}>{{project.problem}}</textarea>
+                    <textarea class="col" name="solution" type="text" {{#hasntPerm role "manageProject"}}disabled{{/hasntPerm}}>{{project.solution}}</textarea>
                 </div>
-                <button class="btn primary submit-btn" type="submit" disabled>Submit Changes</button>
+                {{#hasPerm role "manageProject"}}
+                    <button class="btn primary submit-btn" type="submit" disabled>Submit Changes</button>
+                {{/hasPerm}}
             </form>
         </div>
     </div>
