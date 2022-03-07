@@ -30,8 +30,8 @@
                     <div class="heading">
                         <span>{{name}}</span>
                         {{#hasPerm @root/role "managteTasks"}}
-                        <span><a href="#">Edit</a></span>
-                        <span><a href="#" onclick="createNew(document.getElementById('tasks-{{id}}'), '{{../project.id}}')">Add</a></span>
+                        <span><a href="#" class="del-archived">Edit</a></span>
+                        <span><a href="#" class="del-archived" onclick="createNew(document.getElementById('tasks-{{id}}'), '{{../project.id}}')">Add</a></span>
                         {{/hasPerm}}
                     </div>
                     <div class="content">
@@ -67,5 +67,6 @@
     {{> footer}}
 
     <script src="/public/js/tasks.js"></script>
+    <script src="/public/js/archived.js"></script>
 </body>
 </html>

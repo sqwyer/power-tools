@@ -36,6 +36,7 @@
             </form>
             {{#hasPerm role "admin"}}
             <hr>
+            {{#ifEquals project.state 0}}
             <form id="archive-form" class="form-no-align" action="/project/{{project.id}}/action/archive" method="post">
                 <h2>Archive Project</h2>
                 <p>Make the project uneditable, the project will still be visibile but cannot be modified.</p>
@@ -44,6 +45,16 @@
                     <button class="btn danger" id="archive-submit" disabled>Archive</button>
                 </div>
             </form>
+            {{else}}
+            <form id="archive-form" class="form-no-align" action="/project/{{project.id}}/action/unarchive" method="post">
+                <h2>Unarchive Project</h2>
+                <p>Make the project editable, project members with given permissions will be able to continue modifying the project.</p>
+                <div class="archive-row">
+                    <input name="name" class="not-empty archive-exc" placeholder="{{project.name}}">
+                    <button class="btn danger archive-exc" id="archive-submit" disabled>Unarchive</button>
+                </div>
+            </form>
+            {{/ifEquals}}
             {{/hasPerm}}
         </div>
     </div>
@@ -54,5 +65,6 @@
     <script>
         watch("form-1");
     </script>
+    <script src="/public/js/archived.js"></script>
 </body>
 </html>
