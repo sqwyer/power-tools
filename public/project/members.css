@@ -55,6 +55,14 @@ span.email {
     color: gold;
 }
 
+.key-row {
+    display: flex;
+    flex-direction: row;
+    padding: 0;
+    margin: 0;
+    justify-content: right;
+}
+
 @media only screen and (max-width: 900px) {
     .member, .invite {
         overflow-y: auto;
