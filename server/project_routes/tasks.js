@@ -23,6 +23,11 @@ function getAll (req, res) {
         else if(!data.user) res.redirect('/api/auth/login')
         else {
             let { project, user, member, role } = data;
+            project.tasks.map(self => self.tasks.map(s => s.sDue = {
+                m: s.due.split('/')[0] || null,
+                d: s.due.split('/')[1] || null,
+                y: s.due.split('/')[2] || null,
+            }))
             res.render(path, {project, user, member, role});
         }
     })

@@ -47,7 +47,7 @@
                                     {{#ifEmpty due}}
                                     <a href="#">No due date.</a>
                                     {{else}}
-                                    <a href="#">Due {{due}}.</a>
+                                    <a href="/project/{{@root/project.id}}/5/spec?m={{sDue.m}}&d={{sDue.d}}&y={{sDue.y}}">Due {{due}}.</a>
                                     {{/ifEmpty}}
                                 </div>
                             </div>
