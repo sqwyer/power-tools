@@ -17,19 +17,20 @@
     <div class="container flex-row">
         {{> sidebar}}
         <div class="col">
-            <h1>{{project.name}}</h1>
+            <h1>{{project.name}} Settings</h1>
             <hr>
-            {{!-- <p class="push-up">{{project.description}}</p> --}}
-            <form class="no-padding form-no-align" id="form-1" action="/project/{{project.id}}/action/update" method="POST">
-                <div class="flex-row no-padding">
-                    <label class="col">Problem</label>
-                    <label class="col">Solution</label>
+            <form id="form-1" class="task-general form-no-align" action="/project/{{project.id}}/action/update?redirect=/project/{{project.id}}/4" method="post">
+                <div class="form-row">
+                    <label class="required">Project Name</label>
+                    <input name="name" class="not-empty" value="{{project.name}}" placeholder="{{project.name}}" {{#hasntPerm role "manageProject"}}disabled{{/hasntPerm}}>
                 </div>
-                <div class="flex-row no-padding">
-                    <textarea class="col" name="problem" type="text">{{project.problem}}</textarea>
-                    <textarea class="col" name="solution" type="text">{{project.solution}}</textarea>
+                <div class="form-row">
+                    <label class="required">Project Description</label>
+                    <input name="description" class="not-empty" value="{{project.description}}" placeholder="{{project.description}}" {{#hasntPerm role "manageProject"}}disabled{{/hasntPerm}}>
                 </div>
+                {{#hasPerm role "manageProject"}}
                 <button class="btn primary submit-btn" type="submit" disabled>Submit Changes</button>
+                {{/hasPerm}}
             </form>
         </div>
     </div>

@@ -21,6 +21,7 @@
         {{> sidebar}}
         <div class="col">
             <h1>{{project.name}} Calendar ({{m}}/{{d}}/{{y}})</h1>
+            <hr>
             {{#isntEmpty tasks}}
             {{#if (math tasks.length "=" 1)}}
             <p>There is {{tasks.length}} task due.</p>
