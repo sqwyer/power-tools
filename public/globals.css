@@ -436,3 +436,11 @@ hr.no-top {
 .as-x.xp {
     padding-bottom: 10px;
 }
+
+.archived {
+    display: block;
+    padding: 1em;
+    text-align: center;
+    color: #fff;
+    background:rgb(227, 43, 43);
+}
