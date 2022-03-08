@@ -21,7 +21,13 @@
             <div class="col shortened custom-scroll">
                 <h4 class="push-up-small">{{name}}</h4>
                 <p class="push-up-small">{{description}}</p>
-                <button class="btn primary block" onclick="window.open('/project/{{_id}}', '_self')">Manage</button>
+                <button class="btn primary block" onclick="window.open('/project/{{_id}}', '_self')">
+                {{#ifEquals state 1}}
+                View
+                {{else}}
+                Manage
+                {{/ifEquals}}
+                </button>
             </div>
             {{/each}}
         </div>

@@ -27,16 +27,18 @@ function post (req, res) {
             else debug(data.error, () => res.redirect('/'));
         } else {
             let {project} = data;
-            for(let [index, [key, value]] of Object.entries(Object.entries(body))) {
-                project[key]=value;
-                project.markModified(key);
-                if((Number(index)+1) == Object.keys(body).length) {
-                    project.save(err => {
-                        if(err) console.error(err);
-                        require('../helpers/redirect')(req, res, `/project/${project._id.toString()}`);
-                    });
+            if(project.state == 0) {
+                for(let [index, [key, value]] of Object.entries(Object.entries(body))) {
+                    project[key]=value;
+                    project.markModified(key);
+                    if((Number(index)+1) == Object.keys(body).length) {
+                        project.save(err => {
+                            if(err) console.error(err);
+                            require('../helpers/redirect')(req, res, `/project/${project._id.toString()}`);
+                        });
+                    }
                 }
-            }
+            } else require('../helpers/redirect')(req, res, '/project/' + project.id + '/?err=Project is archived.');
         }
     }, "manageProject");
 }

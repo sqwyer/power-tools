@@ -43,27 +43,29 @@ function updateRole (req, res) {
         }
         else {
             let { project } = data;
-            let { role } = req.body;
-            if(!role) res.redirect(`/project/${data.project._id.toString()}/2`);
-            else {
-                let pRole = project.roles.find(self => self.name === role);
-                if(!pRole) res.redirect(`/project/${data.project._id.toString()}/2`);
+            if(project.state == 0) {
+                let { role } = req.body;
+                if(!role) res.redirect(`/project/${data.project._id.toString()}/2`);
                 else {
-                    let member = project.members.find(self => self.id.toString() == req.params.user);
-                    if(!member) res.redirect(`/project/${data.project._id.toString()}/2`);
+                    let pRole = project.roles.find(self => self.name === role);
+                    if(!pRole) res.redirect(`/project/${data.project._id.toString()}/2`);
                     else {
-                        if(member.role == 'Manager' && project.members.filter(self => self.role === 'Manager').length <= 1) res.redirect(`/project/${data.project._id.toString()}/2`);
+                        let member = project.members.find(self => self.id.toString() == req.params.user);
+                        if(!member) res.redirect(`/project/${data.project._id.toString()}/2`);
                         else {
-                            project.members[project.members.indexOf(member)].role = pRole.name;
-                            project.markModified('members');
-                            project.save(err => {
-                                if(err) debug(data.error, ()=>{});
-                                res.redirect(`/project/${data.project._id.toString()}/2`);
-                            });
+                            if(member.role == 'Manager' && project.members.filter(self => self.role === 'Manager').length <= 1) res.redirect(`/project/${data.project._id.toString()}/2`);
+                            else {
+                                project.members[project.members.indexOf(member)].role = pRole.name;
+                                project.markModified('members');
+                                project.save(err => {
+                                    if(err) debug(data.error, ()=>{});
+                                    res.redirect(`/project/${data.project._id.toString()}/2`);
+                                });
+                            }
                         }
                     }
                 }
-            }
+            } else require('../helpers/redirect')(req, res, '/project/' + project.id + '/2?err=Project is archived.');
         }
     }, 'manageMembers');
 }
@@ -73,26 +75,28 @@ function inviteMember (req, res) {
         if(data.error) debug(data.error, () => res.redirect('/'));
         else {
             let { project } = data;
-            let { invites } = project;
-            UserModel.findOne({email: req.body.member}).exec((err, user) => {
-                if(err) debug(err, () => res.redirect(`/project/${data.project._id.toString()}/2`));
-                else if(!user) res.redirect(`/project/${data.project._id.toString()}/2`);
-                else if(invites.includes(user._id.toString())) res.redirect(`/project/${data.project._id.toString()}/2`);
-                else if(project.members.find(s=>s.id===user._id.toString())) res.redirect(`/project/${data.project._id.toString()}/2`);
-                else {
-                    user.invites.push(project._id.toString());
-                    user.markModified('invites');
-                    project.invites.push(user._id.toString());
-                    project.markModified('invites');
-                    project.save(err => {
-                        if(err) debug(err, () => {});
-                        user.save(err2 => {
-                            if(err2) debug(err2, () => {});
-                            res.redirect(`/project/${data.project._id.toString()}/2`);
+            if(project.state == 0) {
+                let { invites } = project;
+                UserModel.findOne({email: req.body.member}).exec((err, user) => {
+                    if(err) debug(err, () => res.redirect(`/project/${data.project._id.toString()}/2`));
+                    else if(!user) res.redirect(`/project/${data.project._id.toString()}/2`);
+                    else if(invites.includes(user._id.toString())) res.redirect(`/project/${data.project._id.toString()}/2`);
+                    else if(project.members.find(s=>s.id===user._id.toString())) res.redirect(`/project/${data.project._id.toString()}/2`);
+                    else {
+                        user.invites.push(project._id.toString());
+                        user.markModified('invites');
+                        project.invites.push(user._id.toString());
+                        project.markModified('invites');
+                        project.save(err => {
+                            if(err) debug(err, () => {});
+                            user.save(err2 => {
+                                if(err2) debug(err2, () => {});
+                                res.redirect(`/project/${data.project._id.toString()}/2`);
+                            });
                         });
-                    });
-                }
-            });
+                    }
+                });
+            } else require('../helpers/redirect')(req, res, '/project/' + project.id + '/2?err=Project is archived.');
         }
     }, 'manageMembers');
 }
@@ -133,27 +137,29 @@ function cancelInvite (req, res) {
         if(data.error) debug(data.error, () => res.redirect('/'));
         else {
             let { project } = data;
-            let { invites } = project;
-            UserModel.findById(req.body.member).exec((err, user) => {
-                if(err) debug(err, () => res.redirect(`/project/${data.project._id.toString()}/2`));
-                else if(!user) res.redirect(`/project/${data.project._id.toString()}/2`);
-                else if(!invites.includes(user._id.toString())) res.redirect(`/project/${data.project._id.toString()}/2`);
-                else {
-                    let pI = user.invites.indexOf(project._id.toString());
-                    let uI = project.invites.indexOf(user._id.toString());
-                    user.invites.splice(pI,1);
-                    user.markModified('invites');
-                    project.invites.splice(uI,1);
-                    project.markModified('invites');
-                    user.save(err2 => {
-                        if(err2) debug(err2, () => {});
-                        project.save(err3 => {
-                            if(err3) debug(err3, () => {});
-                            res.redirect(`/project/${data.project._id.toString()}/2`);
+            if(project.state == 0) {
+                let { invites } = project;
+                UserModel.findById(req.body.member).exec((err, user) => {
+                    if(err) debug(err, () => res.redirect(`/project/${data.project._id.toString()}/2`));
+                    else if(!user) res.redirect(`/project/${data.project._id.toString()}/2`);
+                    else if(!invites.includes(user._id.toString())) res.redirect(`/project/${data.project._id.toString()}/2`);
+                    else {
+                        let pI = user.invites.indexOf(project._id.toString());
+                        let uI = project.invites.indexOf(user._id.toString());
+                        user.invites.splice(pI,1);
+                        user.markModified('invites');
+                        project.invites.splice(uI,1);
+                        project.markModified('invites');
+                        user.save(err2 => {
+                            if(err2) debug(err2, () => {});
+                            project.save(err3 => {
+                                if(err3) debug(err3, () => {});
+                                res.redirect(`/project/${data.project._id.toString()}/2`);
+                            })
                         })
-                    })
-                }
-            });
+                    }
+                });
+            } else require('../helpers/redirect')(req, res, '/project/' + project.id + '/2?err=Project is archived.');
         }
     }, 'manageMembers');
 }

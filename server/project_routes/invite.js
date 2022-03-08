@@ -18,30 +18,31 @@ function acceptInvite (req, res) {
         if(data.error) debug(data.error, () => res.redirect('/'));
         else {
             let { project, user } = data;
-            console.log(data);
-            if(!project.invites.includes(user._id.toString()) || project.members.find(self => self.id === user._id.toString())) res.redirect(`/dashboard`);
-            else {
-                let pI = user.invites.indexOf(project._id.toString());
-                let uI = project.invites.indexOf(req.body.member);
-                user.invites.splice(pI,1);
-                user.markModified('invites');
-                project.invites.splice(uI,1);
-                project.markModified('invites');
-                project.members.push({
-                    id: user._id.toString(),
-                    role: 'Member'
-                });
-                project.markModified('members');
-                user.projects.push(project._id.toString());
-                user.markModified('projects')
-                user.save(err2 => {
-                    if(err2) debug(err2, () => {});
-                    project.save(err3 => {
-                        if(err3) debug(err3, () => {});
-                        res.redirect(`/project/${data.project._id.toString()}`);
+            if(project.state == 0) {
+                if(!project.invites.includes(user._id.toString()) || project.members.find(self => self.id === user._id.toString())) res.redirect(`/dashboard`);
+                else {
+                    let pI = user.invites.indexOf(project._id.toString());
+                    let uI = project.invites.indexOf(req.body.member);
+                    user.invites.splice(pI,1);
+                    user.markModified('invites');
+                    project.invites.splice(uI,1);
+                    project.markModified('invites');
+                    project.members.push({
+                        id: user._id.toString(),
+                        role: 'Member'
+                    });
+                    project.markModified('members');
+                    user.projects.push(project._id.toString());
+                    user.markModified('projects')
+                    user.save(err2 => {
+                        if(err2) debug(err2, () => {});
+                        project.save(err3 => {
+                            if(err3) debug(err3, () => {});
+                            res.redirect(`/project/${data.project._id.toString()}`);
+                        })
                     })
-                })
-            }
+                }
+            } else require('../helpers/redirect')(req, res, '/dashboard?err=Project is archived.');
         }
     });
 }
@@ -51,28 +52,30 @@ function denyInvite (req, res) {
         if(data.error) debug(data.error, () => res.redirect('/'));
         else {
             let { project, user } = data;
-            if(!project.invites.includes(req.body.member) || project.members.find(self => self.id === user._id.toString())) res.redirect(`/dashboard`);
-            else {
-                UserModel.findById(req.body.member, (err, user) => {
-                    if(err) debug(err, () => res.redirect(`/dashboard`));
-                    else if(!user) res.redirect(`/dashboard`);
-                    else {
-                        let pI = user.invites.indexOf(project._id.toString());
-                        let uI = project.invites.indexOf(req.body.member);
-                        user.invites.splice(pI,1);
-                        user.markModified('invites');
-                        project.invites.splice(uI,1);
-                        project.markModified('invites');
-                        user.save(err2 => {
-                            if(err2) debug(err2, () => {});
-                            project.save(err3 => {
-                                if(err3) debug(err3, () => {});
-                                res.redirect(`/project/${data.project._id.toString()}`);
+            if(project.state == 0) {
+                if(!project.invites.includes(req.body.member) || project.members.find(self => self.id === user._id.toString())) res.redirect(`/dashboard`);
+                else {
+                    UserModel.findById(req.body.member, (err, user) => {
+                        if(err) debug(err, () => res.redirect(`/dashboard`));
+                        else if(!user) res.redirect(`/dashboard`);
+                        else {
+                            let pI = user.invites.indexOf(project._id.toString());
+                            let uI = project.invites.indexOf(req.body.member);
+                            user.invites.splice(pI,1);
+                            user.markModified('invites');
+                            project.invites.splice(uI,1);
+                            project.markModified('invites');
+                            user.save(err2 => {
+                                if(err2) debug(err2, () => {});
+                                project.save(err3 => {
+                                    if(err3) debug(err3, () => {});
+                                    res.redirect(`/dashboard`);
+                                })
                             })
-                        })
-                    }
-                })
-            }
+                        }
+                    })
+                }
+            } else require('../helpers/redirect')(req, res, '/dashboard');
         }
     });
 }

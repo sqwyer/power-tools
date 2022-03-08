@@ -61,28 +61,30 @@ function create (req, res) {
         else if(!data.user) res.redirect('/api/auth/login')
         else {
             let { project } = data;
-            let list = project.tasks.find(self => self.id.toString() === req.params.list);
-            if(!list) res.redirect('/project/' + project.id + '/1')
-            else {
-                let i = project.tasks.indexOf(list);
-                let { name, note, due } = req.body;
-                if(!name || !note) {
-                    res.redirect('/project/' + project.id + '/1');
-                } else {
-                    if(!due) due = '';
-                    project.tasks[i].tasks.push({
-                        id: new mongoose.Types.ObjectId(),
-                        name,
-                        note,
-                        due
-                    });
-                    project.markModified('tasks');
-                    project.save(err => {
-                        if(err) debug(err, () => {});
+            if(project.state == 0) {
+                let list = project.tasks.find(self => self.id.toString() === req.params.list);
+                if(!list) res.redirect('/project/' + project.id + '/1')
+                else {
+                    let i = project.tasks.indexOf(list);
+                    let { name, note, due } = req.body;
+                    if(!name || !note) {
                         res.redirect('/project/' + project.id + '/1');
-                    });
+                    } else {
+                        if(!due) due = '';
+                        project.tasks[i].tasks.push({
+                            id: new mongoose.Types.ObjectId(),
+                            name,
+                            note,
+                            due
+                        });
+                        project.markModified('tasks');
+                        project.save(err => {
+                            if(err) debug(err, () => {});
+                            res.redirect('/project/' + project.id + '/1');
+                        });
+                    }
                 }
-            }
+            } else require('../helpers/redirect')(req, res, '/project/' + project.id + '/1?err=Project is archived.');
 
         }
     }, 'manageTasks');
@@ -97,20 +99,22 @@ function remove (req, res) {
         else if(!data.user) res.redirect('/api/auth/login')
         else {
             let { project } = data;
-            let list = project.tasks.find(s=>s.id==req.params.list);
-            if(!list) res.redirect('/project/' + project.id + '/1');
-            else {
-                let task = list.tasks.find(s=>s.id==req.params.tid);
-                if(!task) res.redirect('/project/' + project.id + '/1');
+            if(project.state == 0) {
+                let list = project.tasks.find(s=>s.id==req.params.list);
+                if(!list) res.redirect('/project/' + project.id + '/1');
                 else {
-                    project.tasks[project.tasks.indexOf(list)].tasks.splice(list.tasks.indexOf(task),1);
-                    project.markModified('tasks');
-                    project.save(err => {
-                        if(err) debug(err, () => {});
-                        res.redirect('/project/' + project.id + '/1')
-                    })
+                    let task = list.tasks.find(s=>s.id==req.params.tid);
+                    if(!task) res.redirect('/project/' + project.id + '/1');
+                    else {
+                        project.tasks[project.tasks.indexOf(list)].tasks.splice(list.tasks.indexOf(task),1);
+                        project.markModified('tasks');
+                        project.save(err => {
+                            if(err) debug(err, () => {});
+                            res.redirect('/project/' + project.id + '/1')
+                        })
+                    }
                 }
-            }
+            } else require('../helpers/redirect')(req, res, '/project/' + project.id + '/1?err=Project is archived.');
         }
     }, 'manageTasks');
 }
@@ -124,28 +128,32 @@ function update (req, res) {
         else if(!data.user) res.redirect('/api/auth/login')
         else {
             let { project } = data;
-            let list = project.tasks.find(s=>s.id==req.params.list);
-            if(!list) res.redirect('/project/' + project.id + '/1');
-            else {
-                let task = list.tasks.find(s=>s.id==req.params.tid);
-                if(!task) res.redirect('/project/' + project.id + '/1');
+            if(project.state == 0) {
+                let list = project.tasks.find(s=>s.id==req.params.list);
+                if(!list) res.redirect('/project/' + project.id + '/1');
                 else {
-                    let er = "";
-                    if(Object.keys(req.body).length > 0) {
-                        for(let k in req.body) {
-                            if(k == 'due') {
-                                if(isValidDate(req.body[k])) project.tasks[project.tasks.indexOf(list)].tasks[list.tasks.indexOf(task)][k] = req.body[k];
-                                else er = "?err=Invalid date.";
+                    let task = list.tasks.find(s=>s.id==req.params.tid);
+                    if(!task) res.redirect('/project/' + project.id + '/1');
+                    else {
+                        let er = "";
+                        if(Object.keys(req.body).length > 0) {
+                            for(let k in req.body) {
+                                if(k == 'due') {
+                                    if(isValidDate(req.body[k])) project.tasks[project.tasks.indexOf(list)].tasks[list.tasks.indexOf(task)][k] = req.body[k];
+                                    else er = "?err=Invalid date.";
+                                }
+                                else if(req.body[k] != '') project.tasks[project.tasks.indexOf(list)].tasks[list.tasks.indexOf(task)][k] = req.body[k];
                             }
-                            else if(req.body[k] != '') project.tasks[project.tasks.indexOf(list)].tasks[list.tasks.indexOf(task)][k] = req.body[k];
-                        }
-                        project.markModified('tasks');
-                        project.save(err => {
-                            if(err) debug(err, () => {});
-                            res.redirect('/project/' + project.id + '/1/' + req.params.list + '/' + req.params.tid + er);
-                        })
-                    } else res.redirect('/project/' + project.id + '/1/' + req.params.list + '/' + req.params.tid + er);
+                            project.markModified('tasks');
+                            project.save(err => {
+                                if(err) debug(err, () => {});
+                                res.redirect('/project/' + project.id + '/1/' + req.params.list + '/' + req.params.tid + er);
+                            })
+                        } else res.redirect('/project/' + project.id + '/1/' + req.params.list + '/' + req.params.tid + er);
+                    }
                 }
+            } else {
+                require('../helpers/redirect')(req, res, '/project/' + project.id + '/1/' + req.params.list + '/' + req.params.tid + '/?err=Project is archived.');
             }
         }
     }, 'manageTasks');
