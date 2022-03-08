@@ -70,3 +70,9 @@
 .tasklist .content .task:not(:first-child) {
     margin-top: 1em;
 }
+
+@media only screen and (max-width: 900px) {
+    .lists {
+        flex-direction: column;
+    }
+}
