@@ -49,11 +49,14 @@
                         </form>
                     </span>
                     <span>
-                        {{#ifEquals ../user.id id}}
-                        <button class="btn danger">Leave</button>
-                        {{else}}
-                        <button class="btn danger" {{#hasntPerm @root/role "removeMembers"}}disabled{{/hasntPerm}}>Remove</button>
-                        {{/ifEquals}}
+                        <form class="form-exclude" action="/project/{{../project.id}}/2/kick" method="POST">
+                            <input name="id" value="{{id}}" style="display: none">
+                            {{#ifEquals ../user.id id}}
+                            <button class="btn danger">Leave</button>
+                            {{else}}
+                            <button class="btn danger" {{#hasntPerm @root/role "removeMembers"}}disabled{{/hasntPerm}}>Remove</button>
+                            {{/ifEquals}}
+                        </form>
                     </span>
                 </div>
                 {{/each}}

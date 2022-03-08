@@ -164,9 +164,45 @@ function cancelInvite (req, res) {
     }, 'manageMembers');
 }
 
+function kick (req, res) {
+    can(req.user.email, req.params.id, data => {
+        if(data.error) {
+            if(data.error == 'No permission.') require('../helpers/redirect')(req, res, '/project/' + project.id + '/2?err=No permission.');
+            else require('../helpers/redirect')(req, res, '/');
+        } else {
+            let { project } = data;
+            if(project.state == 0) {
+                let { id } = req.body;
+                let member = project.members.find(self => self.id === id);
+                if(member) {
+                    if(project.members.length != 1) {
+                        project.members.splice(project.members.indexOf(id), 1);
+                        UserModel.findById(id).exec((err, user) => {
+                            if(err) debug(err, () => require('../helpers/redirect')(req, res, '/project/' + project.id + '/2?err=Internal error.'))
+                            else {
+                                user.projects.splice(user.projects.indexOf(project.id), 1);
+                                user.markModified('projects');
+                                project.markModified('members');
+                                user.save(err2 => {
+                                    if(err2) debug(err2, () => require('../helpers/redirect')(req, res, '/project/' + project.id + '/2?err=Internal error.'));
+                                    else project.save(err3 => {
+                                        if(err3) debug(err3, () => require('../helpers/redirect')(req, res, '/project/' + project.id + '/2?err=Internal error.'));
+                                        else require('../helpers/redirect')(req, res, '/project/' + project.id + '/2');
+                                    });
+                                });
+                            }
+                        });
+                    } else require('../helpers/redirect')(req, res, '/project/' + project.id + '/2?err=Cannot leave with only 1 project member.');
+                }  else require('../helpers/redirect')(req, res, '/project/' + project.id + '/2?err=Member not in project.');
+            } else require('../helpers/redirect')(req, res, '/project/' + project.id + '/2?err=Project is archived.');
+        }
+    }, 'manageMembers');
+}
+
 module.exports.mod = app => {
     app.get('/project/:id/2', require('../ensureAuth'), get)
     app.post('/project/:id/2/updateRole/:user', require('../ensureAuth'), updateRole)
     app.post('/project/:id/2/invite/send', require('../ensureAuth'), inviteMember)
     app.post('/project/:id/2/invite/cancel', require('../ensureAuth'), cancelInvite)
+    app.post('/project/:id/2/kick', require('../ensureAuth'), kick)
 }
