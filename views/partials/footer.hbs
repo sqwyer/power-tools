@@ -14,13 +14,13 @@
         </div>
         <div>
             <h4>Product</h4>
-            <a href="#">Help Center</a>
+            <a href="/help">Help Center</a>
             {{#isntEmpty user}}
             <a href="/dashboard">Dashboard</a>
             <a href="/api/auth/logout">Logout</a>
             {{else}}
-            <a href="#">Register</a>
-            <a href="#">Login</a>
+            <a href="/api/auth/signup">Register</a>
+            <a href="/api/auth/login">Login</a>
             {{/isntEmpty}}
         </div>
         {{#if user.admin}}
@@ -36,14 +36,14 @@
             <h4>Development</h4>
             <a href="#">Bug Reports</a>
             <a href="#">Contact</a>
-            <a href="#">Source</a>
+            <a href="https://github.com/sqwyer/power-tools">Source</a>
         </div>
         <div>
             <h4>Project</h4>
             <a href="#">Team Members</a>
             <a href="#">Project Information</a>
             <a href="#">Articles</a>
-            <a href="#">Deadlines</a>
+            {{!-- <a href="#">Deadlines</a> --}}
         </div>
     </div>
     {{!-- <div class="bottom">
