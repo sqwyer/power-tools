@@ -9,19 +9,20 @@ function get (req, res) {
             let { project, member, user, role } = data;
             let members = [];
             for(let i = 0; i < project.members.length; i++) {
-                UserModel.findById(project.members[i].id).exec((err, data) => {
+                UserModel.findById(project.members[i].id).exec((err, user) => {
                     if(err) debug(err, ()=>{});
-                    else if(!data) debug(err, () => {});
+                    else if(!user) debug(err, () => {});
                     else {
-                        members.push({...project.members[i], name: data.name, id: data._id.toString(), email: data.email});
+                        members.push({...project.members[i], name: user.name, id: user._id.toString(), email: user.email});
                         if(i+1==project.members.length) {
                             let invites = [];
                             if(project.invites.length >= 1) {
                                 for(let k = 0; k < project.invites.length; k++) {
-                                    UserModel.findById(project.invites[k], (err2, user) => {
+                                    UserModel.findById(project.invites[k], (err2, user2) => {
                                         if(err2) debug(err2, () => {})
                                         else {
-                                            invites.push({id: project.invites[k], name: user.name, email: user.email})
+                                            invites.push({id: project.invites[k], name: user2.name, email: user2.email})
+                                            console.log(members, invites);
                                             if(k+1==project.invites.length) res.render(`${__dirname}/../../views/project/members`, {project, member, user, role, members, invites});
                                         }
                                     })
@@ -176,7 +177,11 @@ function kick (req, res) {
                 let member = project.members.find(self => self.id === id);
                 if(member) {
                     if(project.members.length != 1) {
+                        if(member.role == 'Manager' && project.members.filter(self => self.role == 'Manager').length == 1) {
+                            return require('../helpers/redirect')(req, res, '/project/' + project.id + '/2?err=Cannot leave project without any other managers.');
+                        }
                         project.members.splice(project.members.indexOf(id), 1);
+                        project.members.filter(self => self.role == 'Manager');
                         UserModel.findById(id).exec((err, user) => {
                             if(err) debug(err, () => require('../helpers/redirect')(req, res, '/project/' + project.id + '/2?err=Internal error.'))
                             else {

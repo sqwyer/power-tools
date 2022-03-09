@@ -31,6 +31,13 @@ hbs.registerHelper("math", function(lvalue, operator, rvalue, options) {
     }[operator];
 });
 
+// hbs.registerHelper("console", function(v, options) {
+//     console.log('-----');
+//     console.log(v);
+//     console.log('-----');
+//     return options.fn(this);
+// });
+
 hbs.registerHelper('ifEquals', function(arg1, arg2, options) {
     return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
 });
