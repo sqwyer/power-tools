@@ -58,6 +58,6 @@ function post (req, res) {
 }
 
 module.exports.mod = app => {
-    app.get('/api/auth/signup', require('../ensureNotAuth'), (req, res) => res.render(`${__dirname}/../../views/signup`))
+    app.get('/api/auth/signup', require('../ensureNotAuth'), (_, res) => res.render(`${__dirname}/../../views/signup`))
     app.post('/api/auth/signup', require('../ensureNotAuth'), post)
 }

@@ -14,6 +14,12 @@
 <body>
     {{> nav}}
     <form action="/api/auth/signup" method="POST" class="auth">
+        {{#if errorMessage}}
+        <span class="error">
+            <span class="text">{{errorMessage}}</span>
+            <span class="close" onclick="this.parentElement.remove()">&times;</span>
+        </span>
+        {{/if}}
         <label for="name">Full Name</label>
         <input name="name" type="text" placeholder="John Doe" required>
         <label for="email">Email</label>

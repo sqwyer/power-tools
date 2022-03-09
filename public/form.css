@@ -90,3 +90,27 @@ form .form-row input {
 form .form-row label {
     width: fit-content;
 }
+
+form.auth .error {
+    background: rgb(227, 43, 43);
+    color: #fff;
+    display: flex;
+    flex-direction: row;
+    padding: 0.5em 2em;
+    border-radius: 8px;
+}
+
+form.auth .error * {
+    margin-top: 0!important;
+    padding: 0;
+}
+
+form.auth .error .text {
+    width: 100%;
+}
+
+form.auth .error .close {
+    width: fit-content;
+    margin-left: auto;
+    cursor: pointer;
+}
