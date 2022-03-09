@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="/public/form.css">
     <link rel="stylesheet" href="/public/project.css">
     <link rel="stylesheet" href="/public/project/calendar.css">
+    <script src="https://kit.fontawesome.com/bb8a916f03.js" crossorigin="anonymous"></script>
     <title>Power Tools</title>
 </head>
 <body>
@@ -23,20 +24,24 @@
             <h1>{{project.name}} Calendar</h1>
             <hr>
             <h2 class="flex">
-                <span class="left" onclick="left()">&lt;</span>
-                <span class="center">{{calendar.monthName}}, {{calendar.year}}</span>
-                <span class="right" onclick="right()">&gt;</span>
+                {{!-- <span class="left" onclick="left()">&lt;</span> --}}
+                <span class="left">
+                    <i onclick="left()" class="dir fa-solid fa-angle-left"></i>
+                    <i onclick="right()" class="dir fa-solid fa-angle-right"></i>
+                    <span class="month-name">{{calendar.monthName}}, {{calendar.year}}</span>
+                </span>
+                {{!-- <span class="right" onclick="right()">&gt;</span> --}}
                 </h2>
             <br />
             <div class="month fill as-x xp">
                 <div class="week head">
-                    <div class="day">Sunday</div>
-                    <div class="day">Monday</div>
-                    <div class="day">Tuesday</div>
-                    <div class="day">Wednesday</div>
-                    <div class="day">Thursday</div>
-                    <div class="day">Friday</div>
-                    <div class="day">Saturday</div>
+                    <div class="day">sun</div>
+                    <div class="day">mon</div>
+                    <div class="day">tue</div>
+                    <div class="day">wed</div>
+                    <div class="day">thu</div>
+                    <div class="day">fri</div>
+                    <div class="day">sat</div>
                 </div>
                 {{#each calendar.general}}
                 <div class="week">
@@ -45,12 +50,12 @@
                     <div class="day {{#if passed}}passed{{/if}} blank"></div>
                     {{else}}
                     <div class="day {{#if passed}}passed{{/if}} {{#if today}}today{{/if}}">
-                        <p>{{fDate}}</p>
+                        <p>{{date}}</p>
                         {{#isntEmpty tasks}}
-                        <a class="to-task" href="/project/{{@root/project.id}}/1/{{tasks.[0].parent}}/{{tasks.[0].id}}">1) {{tasks.[0].name}}</a>
+                        <a class="to-task" href="/project/{{@root/project.id}}/1/{{tasks.[0].parent}}/{{tasks.[0].id}}">{{tasks.[0].name}}</a>
                         <a href="/project/{{@root/project.id}}/5/spec?m={{@root/calendar.month}}&d={{date}}&y={{@root/calendar.year}}" class="view-more">(See All)</a>
-                        {{else}}
-                            <p>No due tasks.</p>
+                        {{!-- {{else}} --}}
+                            {{!-- <p>No due tasks.</p> --}}
                         {{/isntEmpty}}
                     </div>
                     {{/if}}

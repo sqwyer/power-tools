@@ -14,31 +14,49 @@
 
 .day {
     flex: 1!important;
-    padding: 1.5em;
-    text-align: center;
+    /* padding: 0.5em 0 0 1em; */
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
+    /* text-align: center; */
     border-radius: 0;
-    font-weight: bold;
+    /* font-weight: bold; */
     /* cursor: pointer; */
-    border: 1.5px solid #ddd;
+    border-bottom: 2px solid #eee;
+    min-height: 10vh!important;
 }
 
 .week.head .day {
-    background: rgb(19,112,243)!important;
-    border: 1.5px solid rgb(19,112,243);
+    /* background: rgb(19,112,243)!important;
+    border: 1.5px solid rgb(19,112,243); */
+    font-weight: bold;
+    text-transform: uppercase;
+    min-height: initial!important;
+    padding-bottom: 0.5em;
 }
 
-.day.today, .day:not(.blank):hover {
+.dir {
+    font-weight: normal;
+    color: #ccc;
+    transition: 0.1s;
+    cursor: pointer;
+}
+
+.month-name {
+    margin-left: 5px;
+}
+
+.dir:hover {
+    color: #aaa;
+}
+
+/* .day.today, .day:not(.blank):hover {
     background: #f8f8f8;
-}
+} */
 
-.day.today {
-    /* border: 1.5px solid #ddd; */
+/* .day.today {
+    border: 1.5px solid #ddd;
     background: #eee;
-}
-
-.day p {
-    text-align: left;
-}
+} */
 
 .day p:not(:first-child) {
     font-weight: 500;
@@ -67,8 +85,16 @@ h2.flex {
     text-decoration: none;
 }
 
+.to-task {
+    background: rgb(19,112,243);
+    color: #fff;
+    border-radius: 20px;
+    padding: 0.2em 0.5em;
+    margin-top: 10px;
+}
+
 .view-more {
-    color: #222;
+    color: #808080;
     font-size: 70%;
     margin-top: 5px;
 }
@@ -78,11 +104,7 @@ h2.flex {
     transition: 0.1s;
 }
 
-.to-task {
-    color: #000;
-}
-
-.view-more:hover, .to-task:hover {
+.view-more:hover {
     text-decoration: underline;
 }
 
