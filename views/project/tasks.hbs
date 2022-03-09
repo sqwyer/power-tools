@@ -30,7 +30,8 @@
                     <div class="heading">
                         <span>{{name}}</span>
                         {{#hasPerm @root/role "managteTasks"}}
-                        <span><a href="#" class="del-archived">Edit</a></span>
+                        {{!-- <span><a href="#" class="del-archived">Edit</a></span> --}}
+                        <span></span>
                         <span><a href="#" class="del-archived" onclick="createNew(document.getElementById('tasks-{{id}}'), '{{../project.id}}')">Add</a></span>
                         {{/hasPerm}}
                     </div>
