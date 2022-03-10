@@ -51,22 +51,22 @@ form:not(.form-exclude) .required::after {
 
 @media only screen and (max-width: 1300px) {
     form.auth {
-        width: 50vw
+        width: 50vw!important;
     }
 }
 @media only screen and (max-width: 1000px) {
     form.auth {
-        width: 60vw
+        width: 60vw!important;
     }
 }
 @media only screen and (max-width: 800px) {
     form.auth {
-        width: 70vw
+        width: 70vw!important;
     }
 }
 @media only screen and (max-width: 500px) {
     form.auth {
-        width: 90vw
+        width: 90vw!important;
     }
 }
 
