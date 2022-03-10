@@ -21,6 +21,10 @@ for(let i = 0; i < b.length; i++) {
     if (typeof m.mod == 'function' && !m.disabled) m.mod(app)
 }
 
+app.get('*', (req, res) => {
+    res.render(`${__dirname}/../views/404`, { user: req.user });
+})
+
 app.listen(process.env.PORT || 3000, err => {
     if(err) throw err
     else console.log(`Server running on PORT ${process.env.PORT || 3000}.`)

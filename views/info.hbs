@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/public/globals.css">
+    <link rel="stylesheet" href="/public/help.css">
+    <title>Power Tools</title>
+</head>
+<body>
+    {{>nav}}
+    <header>
+        <h1>Power Tools <span class="exheader">/ Project Information</span></h1>
+        <hr>
+        <p>Power Tools is an NRLHS EAST project that aims to create a website focused on helping students with managing their projects. The project started when I noticed how none of the EAST projects I had worked on had been planned out well, even though I was told many of the things to plan out. I figured that if I created some form of platform that gives you the exact things you need to ask, answer, plan, etc. it would help make all sorts of projects go a lot smoother. Currently, a (semi) functioning website has been created that has authentication, a dashboard, project creation, project calendars, project tasks, project members, and more. When someone creates an account on the website, they are greeted by a dashboard page where they can create new projects or join projects they've been invited to. If they choose to create a new project they're asked a few basic questions that makes them think a little about the goal of their project. Once finished with this, they are brought to a page where they can view and modify all of the project's information, invite new members, plan new tasks, and edit a calendar specifically for their project. Hopefully this project will be able to help many students with their school projects, EAST projects, and more.</p>
+        <br />
+        <p>The website’s server is created with the NodeJS runtime (allows for using JavaScript outside of a web browser) with the Express module. Authentication is handled by the Passport.js module. The website client is created using Handlebars, CSS, and vanilla JavaScript. The project currently is using a free-tier MongoDB database. All of the source code (beside access keys) is publicly available at https://github.com/sqwyer/power-tools.</p>
+        <br />
+        <p class="quote"><b>Have a question?</b> Contact <a href="mailto:570000826@nlrsd.org">570000826@nlrsd.org</a>.</p>
+    </header>
+    {{> footer}}
+</body>
+</html>
