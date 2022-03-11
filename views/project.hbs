@@ -18,7 +18,13 @@
     <div class="container flex-row">
         {{> sidebar}}
         <div class="col">
-            <h1>{{project.name}}</h1>
+            <h1>{{project.name}}
+                {{#isntEmpty project.school}}
+                {{#notEquals project.school "Unselected"}}
+                <span class="school">@ {{project.school}}</span>
+                {{/notEquals}}
+                {{/isntEmpty}}
+            </h1>
             <hr>
             {{!-- <p class="push-up">{{project.description}}</p> --}}
             <form class="no-padding form-no-align" id="form-1" {{#hasPerm role "manageProject"}}action="/project/{{project.id}}/action/update" method="POST"{{/hasPerm}}>

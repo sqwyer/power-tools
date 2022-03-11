@@ -42,6 +42,10 @@ hbs.registerHelper('ifEquals', function(arg1, arg2, options) {
     return (arg1 == arg2) ? options.fn(this) : options.inverse(this);
 });
 
+hbs.registerHelper('notEquals', function(arg1, arg2, options) {
+    return (arg1 != arg2) ? options.fn(this) : options.inverse(this);
+});
+
 hbs.registerHelper('ifEmpty', function(arg1, options) {
     return (arg1 == [] || arg1 == {} || arg1 == undefined || arg1 == '') ? options.fn(this) : options.inverse(this);
 });

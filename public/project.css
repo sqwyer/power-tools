@@ -8,6 +8,12 @@
     padding: 0;
 }
 
+.school {
+    color: #808080;
+    font-size: 30%;
+    font-weight: normal;
+}
+
 .col {
     flex: 1;
 }

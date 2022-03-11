@@ -53,6 +53,11 @@ const ProjectSchema = mongoose.Schema({
                 tasks: []
             }
         ]
+    },
+    school: {
+        type: String,
+        default: 'Unselected',
+        required: false
     }
 })
 const ProjectModel = conn.model('project', ProjectSchema, 'projects')
