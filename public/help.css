@@ -2,7 +2,7 @@ header {
     padding: 2em 6em;
 }
 
-header .exheader {
+.exheader {
     color: #aaa;
     font-weight: normal;
 }

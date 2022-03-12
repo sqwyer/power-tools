@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/public/globals.css">
+    <link rel="stylesheet" href="/public/dashboard.css">
+    <link rel="stylesheet" href="/public/select.css">
+    <link rel="stylesheet" href="/public/help.css">
+    <link rel="stylesheet" href="/public/admin/schools.css">
+    <title>Power Tools</title>
+</head>
+<body>
+    {{>nav}}
+    <div class="container">
+        <h1>Admin <span class="exheader">/ Schools</span></h1>
+        <br />
+        <div id="dropdown_parent">{{>schools_dropdown}}</div>
+        <hr>
+        {{#isntEmpty school}}
+        <div class="school">
+            <div class="users">
+                <label>Users</label>
+                {{#isntEmpty users}}
+                {{#each users}}
+                <div class="user">
+                    <p class="name">{{name}}</p>
+                    <p class="email">{{email}}</p>
+                </div>
+                {{/each}}
+                {{else}}
+                <div class="user">No users.</div>
+                {{/isntEmpty}}
+            </div>
+            <br />
+            <div class="users">
+                <label>Projects</label>
+                {{#isntEmpty projects}}
+                {{#each projects}}
+                <div class="user">
+                    <p class="name">{{name}}</p>
+                    <p class="email">({{members.length}} members)</p>
+                </div>
+                {{/each}}
+                {{else}}
+                <div class="user">No projects.</div>
+                {{/isntEmpty}}
+            </div>
+        </div>
+        {{else}}
+        <p>No school selected.</p>
+        {{/isntEmpty}}
+    </div>
+    {{> footer}}
+    <script>
+        let d = document.getElementById('dropdown_parent').children[0];
+        const update = v => {
+            if ('URLSearchParams' in window) {
+                let searchParams = new URLSearchParams(window.location.search);
+                searchParams.set("q", v);
+                window.location.search = searchParams.toString();
+            }
+        }
+        d.onchange = () => {
+            update(d.value);
+        };
+        let _sp = new URLSearchParams(window.location.search);
+        let _q = _sp.get("q");
+        window.onload = () => {
+            for(let i = 0; i < d.options.length; i++) {
+                if(d.options[i].text == _q) {d.options[i].selected = true; break;}
+            }
+        }
+    </script>
+</body>
+</html>

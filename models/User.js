@@ -17,7 +17,12 @@ const UserSchema = mongoose.Schema({
         type: Boolean,
         default: false
     },
-    password: String
+    password: String,
+    school: {
+        type: String,
+        default: 'Unselected',
+        required: false
+    }
 })
 const UserModel = conn.model('user', UserSchema, 'users')
 
