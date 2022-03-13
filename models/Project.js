@@ -59,7 +59,8 @@ const ProjectSchema = mongoose.Schema({
         default: 'Unselected',
         required: false
     }
-})
+});
+
 const ProjectModel = conn.model('project', ProjectSchema, 'projects')
 
 module.exports = {ProjectSchema, ProjectModel}

@@ -6,7 +6,7 @@ const passport = require('passport');
 const app = express()
 
 const hbs = require('hbs');
-const { can } = require('./server/helpers/can');
+// const { can } = require('./server/helpers/can');
 
 hbs.registerPartials(__dirname + '/views/partials/');
 

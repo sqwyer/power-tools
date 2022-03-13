@@ -23,6 +23,7 @@ for (const filePath of walkSync(__dirname)) {
         && !filePath.includes('.md')
         && !filePath.includes('.json')
         && !filePath.includes('.png')
+        && !filePath.includes('.git/')
     ) l+=fs.readFileSync(filePath).toString().split('\n').length;
 }
 console.log(l);

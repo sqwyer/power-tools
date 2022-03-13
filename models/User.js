@@ -23,7 +23,8 @@ const UserSchema = mongoose.Schema({
         default: 'Unselected',
         required: false
     }
-})
+});
+
 const UserModel = conn.model('user', UserSchema, 'users')
 
 module.exports = {UserSchema, UserModel}
