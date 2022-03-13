@@ -20,7 +20,7 @@
     <div class="container flex-row">
         {{> sidebar}}
         <div class="col">
-            <h1>{{project.name}} Settings</h1>
+            <h1>Project Settings</h1>
             <hr>
             <form id="form-1" class="form-no-align" {{#hasPerm role "manageProject"}}action="/project/{{project.id}}/action/update?redirect=/project/{{project.id}}/4" method="post"{{/hasPerm}}>
                 <div class="form-row">

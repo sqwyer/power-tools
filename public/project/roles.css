@@ -1,0 +1,32 @@
+.role:not(:first-of-type) {
+    border-top: 1.5px solid #eee;
+}
+
+.role {
+    padding: 1em 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.role .edit {
+    margin-left: auto;
+}
+
+hr.no-bottom {
+    margin-bottom: 0!important;
+}
+
+form .fill {
+    flex: 1;
+    width: 100%;
+}
+
+form * {
+    margin-top: 0!important;
+}
+
+form button {
+    width: fit-content!important;
+    display: inline-block!important;
+}
