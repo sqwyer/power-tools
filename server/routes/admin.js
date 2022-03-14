@@ -1,5 +1,4 @@
-const { ProjectModel } = require("../../models/Project");
-const { UserModel } = require("../../models/User");
+const { UserModel, ProjectModel } = require('../getModels')();
 const debug = require('../debug');
 
 function get (req, res) {

@@ -1,6 +1,6 @@
 if(process.env.NODE_ENV != 'production') require('dotenv').config()
 
-const { UserModel } = require("../../models/User")
+const { UserModel } = require('../getModels')();
 const { genSaltSync, hashSync } = require('bcrypt')
 const bcryptSalt = (process.env.SALT != undefined) ? Number(process.env.SALT) : 10
 const debug = require('../debug')
@@ -29,32 +29,38 @@ function post (req, res) {
         return
     }
 
-    UserModel.findOne({email: fields.email})
-        .then(user => {
-            if(user) {
-                res.render(template, { errorMessage: "Email is already registered." })
-                return
-            }
+    UserModel.findOne({email: fields.email}).exec((err, user) => {
+        if(err) {
+            debug(err, () => res.render(template, {errorMessage: "Internal error."}));
+            return;
+        }
+        if(user) {
+            res.render(template, { errorMessage: "Email is already registered." })
+            return
+        }
 
-            let salt = genSaltSync(bcryptSalt)
-            let hash = hashSync(fields.password, salt)
+        let salt = genSaltSync(bcryptSalt)
+        let hash = hashSync(fields.password, salt)
 
-            fields.password = undefined
+        fields.password = undefined
 
-            let newUser = new UserModel({
-                ...fields,
-                password: hash
-            })
+        let newUser = new UserModel({
+            ...fields,
+            password: hash
+        })
 
-            newUser.save()
-                .then(() => {
-                    req.logIn(newUser, err => {
-                        if(err) debug(err, () => res.render(template, {errorMessage: "Internal error."}))
-                        else res.redirect('/dashboard')
-                    })
-                })
-                .catch(err => debug(err, () => res.render(template, {errorMessage: "Internal error."})))
-        }).catch(err => debug(err, () => res.render(template, {errorMessage: "Internal error."})))
+        newUser.save(err2 => {
+            if(err2) return debug(err2, () => res.render(template, {errorMessage: "Internal error."}));
+            if(process.env.BACKUP === "true") newUser = newUser.doc;
+            console.log(newUser);
+            req.logIn(newUser, err3 => {
+                if(err) debug(err3, () => res.render(template, {errorMessage: "Internal error."}))
+                else {
+                    res.redirect('/dashboard')
+                }
+            });
+        });
+    });
 }
 
 module.exports.mod = app => {

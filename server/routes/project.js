@@ -1,4 +1,4 @@
-const { ProjectModel } = require('../../models/Project')
+const { ProjectModel } = require('../getModels')();
 const { can } = require('../helpers/can')
 const debug = require('../debug')
 

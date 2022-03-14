@@ -1,5 +1,4 @@
-const { ProjectModel } = require("../../models/Project")
-const { UserModel } = require("../../models/User")
+const { UserModel, ProjectModel } = require('../getModels')();
 
 module.exports.can = (email, project, next, perm) => {
     UserModel.findOne({email}).exec((err, user) => {
