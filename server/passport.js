@@ -1,6 +1,6 @@
 const { Strategy } = require('passport-local')
 const { compareSync } = require('bcrypt')
-const { UserModel } = require('../models/User')
+const { UserModel } = require('./getModels')();
 
 module.exports = passport => {
 
@@ -9,9 +9,9 @@ module.exports = passport => {
     })
 
     passport.deserializeUser((id, cb) => {
-        UserModel.findById(id)
-            .then(user => cb(null, user))
-            .catch(err => cb(err))
+        UserModel.findById(id).exec((err, user) => {
+            if(err) cb(err)
+            else cb(null, user)})
         })
       
         passport.use(new Strategy(
@@ -21,14 +21,13 @@ module.exports = passport => {
       
                 const {email, password} = req.body
       
-                UserModel.findOne({email})
-                    .then(user => {
-                        if (!user) return done(null, false, { message: "Invalid email or password." })
-                        if (!compareSync(password, user.password)) return done(null, false, { message: "Invalid email or password." })
-          
-                        done(null, user)
-                    })
-                    .catch(err => done(err))
+                UserModel.findOne({email}).exec((err, user) => {
+                    if(err) return done(err);
+                    if (!user) return done(null, false, { message: "Invalid email or password." })
+                    if (!compareSync(password, user.password)) return done(null, false, { message: "Invalid email or password." })
+        
+                    done(null, user)
+                })
             }
       ))
 }

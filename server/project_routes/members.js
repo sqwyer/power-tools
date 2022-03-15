@@ -1,5 +1,5 @@
 const { can } = require('../helpers/can');
-let { UserModel } = require('../../models/User');
+const { UserModel } = require('../getModels')();
 const debug = require('../debug');
 
 function get (req, res) {

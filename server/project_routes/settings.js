@@ -1,7 +1,7 @@
 const { can } = require("../helpers/can");
 const debug = require('../debug');
 const redirect = require('../helpers/redirect');
-const { UserModel } = require("../../models/User");
+const { UserModel } = require('../getModels')();
 
 function get (req, res) {
     can(req.user.email, req.params.id, data => {

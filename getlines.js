@@ -15,15 +15,20 @@ function *walkSync(dir) {
 }
 
 let l = 0;
+let f = 0;
 for (const filePath of walkSync(__dirname)) {
     if(!filePath.includes('/node_modules/')
-        && !filePath.includes('getlines.js')
+        && !filePath.includes('\\node_modules\\')
         && !filePath.includes('.env')
         && !filePath.includes('.gitignore')
-        && !filePath.includes('.md')
         && !filePath.includes('.json')
         && !filePath.includes('.png')
         && !filePath.includes('.git/')
-    ) l+=fs.readFileSync(filePath).toString().split('\n').length;
+        && !filePath.includes('.git\\')
+        && !filePath.includes('.json')
+    ) {
+      l+=fs.readFileSync(filePath).toString().split('\n').length;
+      f++;
+    }
 }
-console.log(l);
+console.log(`${l} lines accross ${f} files.`);

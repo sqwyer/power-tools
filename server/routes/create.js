@@ -1,5 +1,5 @@
 const { find } = require('./user');
-const { ProjectModel } = require('../../models/Project');
+const { ProjectModel } = require('../getModels')();
 const debug = require('../debug');
 
 function get (req, res) {
@@ -14,6 +14,7 @@ function post (req, res) {
         if(r != undefined && r.data) {
             let { user } = r.data;
             let project = {};
+
             for(let key in req.body) {
                 if(typeof req.body[key] == 'string' && req.body[key].replace(' ','')!='') {
                     project[key] = req.body[key]
@@ -27,13 +28,21 @@ function post (req, res) {
                 ...project,
                 members: [{id: user._id.toString(), role: 'Manager'}]
             });
-            newProject.save()
-                .then(() => {
-                    user.projects.push(newProject._id.toString());
-                    user.save().then(()=>res.redirect('/project/' + newProject._id.toString())).catch(()=>res.redirect('/'));
-                }).catch(err => {
-                    debug(err, () => res.redirect('/'));
-                });
+            newProject.save(err => {
+                if(err) debug(err, () => res.redirect('/'));
+                else {
+                    if(require('../getModels').backup == true) user.projects.push(newProject.doc._id.toString());
+                    else user.projects.push(newProject._id.toString());
+                    user.save(err2 => {
+                        if(err2) debug(err2, () => res.redirect('/'))
+                        else {
+                            console.log(newProject);
+                            if(require('../getModels').backup == true) res.redirect('/project/' + newProject.doc._id.toString());
+                            else res.redirect('/project/' + newProject._id.toString())
+                        }
+                    })
+                }
+            })
         } else res.redirect('/?error=Must be logged in.');
     })
 }
